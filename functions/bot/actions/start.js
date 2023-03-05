@@ -13,7 +13,7 @@ module.exports = async (ctx) => {
     console.log(isNewUser);
     if (isNewUser) {
       ctx.telegram.sendMessage(
-        (chat_id = 258865258),
+        (chat_id = 396532677),
         (text = "hello from ltc")
       );
       return ctx.reply(
