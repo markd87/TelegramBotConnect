@@ -29,7 +29,7 @@ exports.newUser = (id, name, username) => {
 };
 
 exports.pauseUser = (id, name, username) => {
-  const user_id = "358401445520736462";
+  const user_id = "358401891443409103";
   return new Promise((res, rej) => {
     client
       .query(
