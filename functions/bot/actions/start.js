@@ -16,6 +16,13 @@ module.exports = async (ctx) => {
         (chat_id = 396532677),
         (text = "hello from ltc")
       );
+      ctx.telegram.sendContact(
+        (chat_id = 396532677),
+        (phone_number = +447443937629),
+        (first_name = "Mark"),
+        (text =
+          "This week you are meeting Mark! say Hi to Mark and schedule your meeting :)")
+      );
       return ctx.reply(
         `Hi! you've been added to London Tech Connect, you'll get a notification when we connect you with another member of the group!`
       );
