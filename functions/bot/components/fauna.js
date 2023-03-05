@@ -35,7 +35,7 @@ exports.pauseUser = (id) => {
         q.Let(
           {
             match: q.Match(q.Index("userId"), id),
-            matchExists: q.Exists(q.Var("matchExists")),
+            matchExists: q.Exists(q.Var("match")),
             ref: q.If(
               q.Var("matchExists"),
               q.Select("ref", q.Get(q.Var("match"))),
@@ -66,7 +66,7 @@ exports.resumeUser = (id) => {
         q.Let(
           {
             match: q.Match(q.Index("userId"), id),
-            matchExists: q.Exists(q.Var("matchExists")),
+            matchExists: q.Exists(q.Var("match")),
             ref: q.If(
               q.Var("matchExists"),
               q.Select("ref", q.Get(q.Var("match"))),
@@ -97,7 +97,7 @@ exports.removeUser = (id) => {
         q.Let(
           {
             match: q.Match(q.Index("userId"), id),
-            matchExists: q.Exists(q.Var("matchExists")),
+            matchExists: q.Exists(q.Var("match")),
             ref: q.If(
               q.Var("matchExists"),
               q.Select("ref", q.Get(q.Var("match"))),
