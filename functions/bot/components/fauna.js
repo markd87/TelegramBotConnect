@@ -29,23 +29,24 @@ exports.newUser = (id, name, username) => {
 };
 
 exports.pauseUser = (id, name, username) => {
+  const user_id = "358401445520736462";
   return new Promise((res, rej) => {
     client
       .query(
         q.Let(
           {
-            userRef: q.Ref(q.Collection("user"), id),
+            userRef: q.Ref(q.Collection("user"), user_id),
             userExists: q.Exists(q.Var("userRef")),
             user: q.If(q.Var("userExists"), q.Get(q.Var("userRef")), null),
           },
           q.If(
             q.Var("userExists"),
-            q.Update(q.Ref(q.Collection("user"), id), {
+            q.Update(q.Ref(q.Collection("user"), user_id), {
               data: {
-                userId: id,
+                // userId: id,
                 participate: false,
-                name: name,
-                username: username,
+                // name: name,
+                // username: username,
               },
             }),
             null
