@@ -26,12 +26,7 @@ module.exports = async (ctx) => {
       );
     } else {
       return ctx.reply(
-        `It looks like you're already on our weekly pairings list! We're so glad to have you as part of our community, 
-        and we hope you're enjoying meeting new people through LondonTechConnect.\n
-        If you need to pause the pairings for any reason, use the /pause command. 
-        If you want to start receiving pairings again, use the /resume command.
-        And If you'd like to remove yourself from the pairings, type /remove. 
-        `
+        `It looks like you're already on our weekly pairings list! We're so glad to have you as part of our community, and we hope you're enjoying meeting new people through LondonTechConnect.\nIf you need to pause the pairings for any reason, use the /pause command. \nIf you want to start receiving pairings again, use the /resume command.\nAnd If you'd like to remove yourself from the pairings, type /remove.`
       );
     }
   } catch (e) {
