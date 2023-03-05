@@ -10,6 +10,7 @@ module.exports = async (ctx) => {
 
   try {
     let isNewUser = await newUser(id);
+    console.log(isNewUser);
     if (isNewUser) {
       return ctx.reply(
         `Hi! you've been added to London Tech Connect, you'll get a notification when we connect you with another member of the group!`

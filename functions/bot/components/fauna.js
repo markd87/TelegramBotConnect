@@ -4,6 +4,8 @@ const client = new faunadb.Client({ secret: process.env.FAUNA_SECRET_KEY });
 const q = faunadb.query;
 
 exports.newUser = (id) => {
+  console.log(id);
+
   return new Promise((res, rej) => {
     client
       .query(
