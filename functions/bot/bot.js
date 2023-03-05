@@ -1,8 +1,5 @@
 const { Telegraf } = require("telegraf");
 const startAction = require("./actions/start");
-const joinAction = require("./actions/join");
-const pauseAction = require("./actions/pause");
-const resumeAction = require("./actions/resume");
 
 const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN);
 
@@ -10,17 +7,11 @@ bot.start((ctx) => {
   return startAction(ctx);
 });
 
-bot.join((ctx) => {
-  return joinAction(ctx);
-});
-
-bot.pause((ctx) => {
-  return pauseAction(ctx);
-});
-
-bot.resume((ctx) => {
-  return resumeAction(ctx);
-});
+// register commands
+bot.command("join", require("./actions/join"));
+bot.command("pause", require("./actions/pause"));
+bot.command("resume", require("./actions/resume"));
+bot.command("remove", require("./actions/remove"));
 
 exports.handler = async (event) => {
   try {
