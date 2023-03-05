@@ -17,6 +17,7 @@ exports.newUser = (id) => {
         res(true);
       })
       .catch((err) => {
+        console.log(err);
         res(false);
       });
   });
