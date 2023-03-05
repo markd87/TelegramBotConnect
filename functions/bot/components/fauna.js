@@ -8,7 +8,7 @@ exports.newUser = (id) => {
     client
       .query(
         q.Create(q.Collection("user"), {
-          data: { userId: id, participate: true },
+          data: { userId: id },
         })
       )
       .then((ret) => {
