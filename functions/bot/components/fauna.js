@@ -28,27 +28,23 @@ exports.newUser = (id, name, username) => {
   });
 };
 
-exports.pauseUser = (id, name, username) => {
-  const user_id = "358401891443409103";
+exports.pauseUser = (id) => {
   return new Promise((res, rej) => {
     client
       .query(
         q.Let(
           {
-            userRef: q.Ref(q.Collection("user"), user_id),
-            userExists: q.Exists(q.Var("userRef")),
-            user: q.If(q.Var("userExists"), q.Get(q.Var("userRef")), null),
+            match: q.Match(q.Index("userId"), id),
+            matchExists: q.Exists(q.Var("matchExists")),
+            ref: q.If(
+              q.Var("matchExists"),
+              q.Select("ref", q.Get(q.Var("match"))),
+              null
+            ),
           },
           q.If(
-            q.Var("userExists"),
-            q.Update(q.Ref(q.Collection("user"), user_id), {
-              data: {
-                // userId: id,
-                participate: false,
-                // name: name,
-                // username: username,
-              },
-            }),
+            q.Var("matchExists"),
+            q.Update(q.Var("ref"), { data: { participate: false } }),
             null
           )
         )
@@ -69,15 +65,17 @@ exports.resumeUser = (id) => {
       .query(
         q.Let(
           {
-            userRef: q.Ref(q.Collection("user"), id),
-            userExists: q.Exists(q.Var("userRef")),
-            user: q.If(q.Var("userExists"), q.Get(q.Var("userRef")), null),
+            match: q.Match(q.Index("userId"), id),
+            matchExists: q.Exists(q.Var("matchExists")),
+            ref: q.If(
+              q.Var("matchExists"),
+              q.Select("ref", q.Get(q.Var("match"))),
+              null
+            ),
           },
           q.If(
-            q.Var("userExists"),
-            q.Update(q.Ref(q.Collection("user"), id), {
-              data: { participate: True },
-            }),
+            q.Var("matchExists"),
+            q.Update(q.Var("ref"), { data: { participate: true } }),
             null
           )
         )
@@ -98,14 +96,15 @@ exports.removeUser = (id) => {
       .query(
         q.Let(
           {
-            userRef: q.Ref(q.Collection("user"), id),
-            userExists: q.Exists(q.Var("userRef")),
+            match: q.Match(q.Index("userId"), id),
+            matchExists: q.Exists(q.Var("matchExists")),
+            ref: q.If(
+              q.Var("matchExists"),
+              q.Select("ref", q.Get(q.Var("match"))),
+              null
+            ),
           },
-          q.If(
-            q.Var("userExists"),
-            q.Delete(q.Ref(q.Collection("user"), id)),
-            null
-          )
+          q.If(q.Var("matchExists"), q.Delete(q.Var("ref")), null)
         )
       )
       .then((ret) => {
