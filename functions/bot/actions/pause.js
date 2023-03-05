@@ -9,7 +9,7 @@ module.exports = async (ctx) => {
   }
 
   try {
-    let isPaused = await pauseUser(id);
+    let isPaused = await pauseUser(id, name, username);
     console.log("Pausing...");
     console.log(isPaused);
 

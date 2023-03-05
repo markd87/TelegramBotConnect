@@ -28,7 +28,7 @@ exports.newUser = (id, name, username) => {
   });
 };
 
-exports.pauseUser = (id) => {
+exports.pauseUser = (id, name, username) => {
   return new Promise((res, rej) => {
     client
       .query(
@@ -41,7 +41,12 @@ exports.pauseUser = (id) => {
           q.If(
             q.Var("userExists"),
             q.Update(q.Ref(q.Collection("user"), id), {
-              data: { participate: false },
+              data: {
+                userId: id,
+                participate: false,
+                name: name,
+                username: username,
+              },
             }),
             null
           )
