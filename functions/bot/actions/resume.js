@@ -2,7 +2,7 @@ const { resumeUser } = require("../components/fauna");
 const { getUser } = require("../components/helper");
 
 module.exports = async (ctx) => {
-  const { id, isBot } = getUser(ctx.from);
+  const { id, isBot, name, username } = getUser(ctx.from);
 
   if (isBot) {
     return ctx.reply(`Sorry I only interact with humans!`);
@@ -10,6 +10,8 @@ module.exports = async (ctx) => {
 
   try {
     let isResume = await resumeUser(id);
+    console.log("Resuming...");
+    console.log(isResume);
 
     if (isResume) {
       return ctx.reply(
