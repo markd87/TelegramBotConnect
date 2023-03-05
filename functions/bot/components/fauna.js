@@ -27,3 +27,61 @@ exports.newUser = (id, name, username) => {
       });
   });
 };
+
+exports.pauseUser = (id) => {
+  return new Promise((res, rej) => {
+    client
+      .query(
+        q.Let(
+          {
+            userRef: q.Ref(q.Collection("user"), id),
+            userExists: q.Exists(q.Var("userRef")),
+            user: q.If(q.Var("userExists"), q.Get(q.Var("userRef")), null),
+          },
+          q.If(
+            q.Var("userExists"),
+            q.Update(q.Ref(q.Collection("user"), id), {
+              data: { participate: false },
+            }),
+            null
+          )
+        )
+      )
+      .then((ret) => {
+        res(true);
+      })
+      .catch((err) => {
+        console.log(err);
+        res(false);
+      });
+  });
+};
+
+exports.resumeUser = (id) => {
+  return new Promise((res, rej) => {
+    client
+      .query(
+        q.Let(
+          {
+            userRef: q.Ref(q.Collection("user"), id),
+            userExists: q.Exists(q.Var("userRef")),
+            user: q.If(q.Var("userExists"), q.Get(q.Var("userRef")), null),
+          },
+          q.If(
+            q.Var("userExists"),
+            q.Update(q.Ref(q.Collection("user"), id), {
+              data: { participate: True },
+            }),
+            null
+          )
+        )
+      )
+      .then((ret) => {
+        res(true);
+      })
+      .catch((err) => {
+        console.log(err);
+        res(false);
+      });
+  });
+};
