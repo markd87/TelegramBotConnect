@@ -11,8 +11,6 @@ function shuffleArray(array) {
   }
 }
 
-shuffleArray(arr);
-
 exports.handler = async function (event, context) {
   console.log("Received event:", event);
 
@@ -24,6 +22,8 @@ exports.handler = async function (event, context) {
       })
     )
   );
+
+  // shuffleArray(all_paricipants);
 
   console.log(all_paricipants);
 
