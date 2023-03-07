@@ -56,9 +56,6 @@ exports.handler = async function (event, context) {
   let previous_pairs = await get_previous_pairs();
   previous_pairs = previous_pairs["data"].map((el) => el.pair);
 
-  console.log(all_participants);
-  console.log(previous_pairs);
-
   shuffleArray(all_participants);
 
   // check if there are odd number of participants
@@ -106,67 +103,28 @@ exports.handler = async function (event, context) {
     }
   }
 
-  // await bot.telegram.sendMessage(258865258, `Hello!`);
-
-  const id = 258865258;
-  await bot.telegram.sendMessage(
-    // (chat_id = parseInt(pair[0].userId)),
-    (chat_id = id),
-    (text = `please work!`)
-    //  You've been randomly matched with @${pair[1].username} for a coffee meetup. \nI hope you both have a great time getting to know each other over a cup of coffee. \nFeel free to coordinate a time and location that works for both of you. Enjoy!`)
-  );
-
-  // await bot.telegram.sendMessage(-997370885, `Hello!`);
-
   if (stop != true) {
     // store pairs
     res = await store_new_pairs(pairs_to_store);
 
-    console.log("SENDING MESSAGES");
     // send messages to pairs
-
-    // bot.start((ctx) => {
-    pairs.forEach(async (pair) => {
-      const user_1 = parseInt(pair[0].userId);
-      const user_2 = parseInt(pair[1].userId);
-      console.log(user_1);
-      console.log(user_2);
+    for (let i = 0; i < pairs.length; i = i + 1) {
+      let user_1 = parseInt(pairs[i][0].userId);
+      let user_2 = parseInt(pairs[i][1].userId);
 
       await bot.telegram.sendMessage(
-        // (chat_id = parseInt(pair[0].userId)),
-        (chat_id = user_2),
-        (text = `I'm alive!`)
-        //  You've been randomly matched with @${pair[1].username} for a coffee meetup. \nI hope you both have a great time getting to know each other over a cup of coffee. \nFeel free to coordinate a time and location that works for both of you. Enjoy!`)
-      );
-
-      await bot.telegram.sendMessage(
-        // (chat_id = parseInt(pair[0].userId)),
         (chat_id = user_1),
-        (text = `I'm alive!`)
-        //  You've been randomly matched with @${pair[1].username} for a coffee meetup. \nI hope you both have a great time getting to know each other over a cup of coffee. \nFeel free to coordinate a time and location that works for both of you. Enjoy!`)
+        (text = `You've been randomly matched with @${pair[1].username} for a coffee meetup. \nI hope you both have a great time getting to know each other over a cup of coffee. \nFeel free to coordinate a time and location that works for both of you. Enjoy!`)
       );
-      // await bot.telegram.sendMessage(
-      //   (chat_id = parseInt(pair[1].userId)),
-      //   (text = `Hello! You've been randomly matched with @${pair[0].username} for a coffee meetup. \nI hope you both have a great time getting to know each other over a cup of coffee. \nFeel free to coordinate a time and location that works for both of you. Enjoy!`)
-      // );
-    });
-    // });
-
-    // pairs.forEach((pair) => {
-    //   bot.telegram.sendMessage(
-    //     pair[0].userId,
-    //     `Hello! You've been randomly matched with @${pair[1].username} for a coffee meetup. \nI hope you both have a great time getting to know each other over a cup of coffee. \nFeel free to coordinate a time and location that works for both of you. Enjoy!`
-    //   );
-    //   bot.telegram.sendMessage(
-    //     pair[1].userId,
-    //     `Hello! You've been randomly matched with @${pair[0].username} for a coffee meetup. \nI hope you both have a great time getting to know each other over a cup of coffee. \nFeel free to coordinate a time and location that works for both of you. Enjoy!`
-    //   );
-    // });
+      await bot.telegram.sendMessage(
+        (chat_id = user_2),
+        (text = `You've been randomly matched with @${pair[1].username} for a coffee meetup. \nI hope you both have a great time getting to know each other over a cup of coffee. \nFeel free to coordinate a time and location that works for both of you. Enjoy!`)
+      );
+    }
   } else {
     console.log("Can't form pairs");
   }
 
-  console.log(trials);
   console.log("new", pairs);
 
   return {
