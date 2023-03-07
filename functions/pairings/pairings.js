@@ -125,13 +125,29 @@ exports.handler = async function (event, context) {
     );
     // bot.start((ctx) => {
     pairs.forEach(async (pair) => {
-      console.log(pair[0].userId);
-      console.log(pair[1].userId);
+      let user_1 = pair[0].userId;
+      let user_2 = pair[1].userId;
+      console.log(user_1);
+      console.log(user_2);
 
       await bot.telegram.sendMessage(
         // (chat_id = parseInt(pair[0].userId)),
         (chat_id = 258865258),
         (text = `Hello!`)
+        //  You've been randomly matched with @${pair[1].username} for a coffee meetup. \nI hope you both have a great time getting to know each other over a cup of coffee. \nFeel free to coordinate a time and location that works for both of you. Enjoy!`)
+      );
+
+      await bot.telegram.sendMessage(
+        // (chat_id = parseInt(pair[0].userId)),
+        (chat_id = user_2),
+        (text = `I'm alive!`)
+        //  You've been randomly matched with @${pair[1].username} for a coffee meetup. \nI hope you both have a great time getting to know each other over a cup of coffee. \nFeel free to coordinate a time and location that works for both of you. Enjoy!`)
+      );
+
+      await bot.telegram.sendMessage(
+        // (chat_id = parseInt(pair[0].userId)),
+        (chat_id = user_1),
+        (text = `I'm alive!`)
         //  You've been randomly matched with @${pair[1].username} for a coffee meetup. \nI hope you both have a great time getting to know each other over a cup of coffee. \nFeel free to coordinate a time and location that works for both of you. Enjoy!`)
       );
       // await bot.telegram.sendMessage(
