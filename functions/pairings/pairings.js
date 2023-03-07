@@ -106,9 +106,10 @@ exports.handler = async function (event, context) {
     }
   }
 
-  bot.telegram.sendMessage(258865258, `Hello!`);
+  await bot.telegram.sendMessage(258865258, `Hello!`);
 
-  bot.telegram.sendMessage(-997370885, `Hello!`);
+  await bot.telegram.sendMessage(-997370885, `Hello!`);
+
   if (stop != true) {
     // store pairs
     res = await store_new_pairs(pairs_to_store);
