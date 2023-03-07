@@ -1,7 +1,19 @@
 const { getUser } = require("../components/helper");
 
+async function isMember(id) {
+  let member = ctx.telegram.getChatMember("@Test", id);
+  console.log(member);
+  return ctx.telegram.getChatMember("@Test", id);
+}
+
 module.exports = async (ctx) => {
   const { id, isBot, name, username } = getUser(ctx.from);
+
+  const isMember = await isMember(ctx, id);
+
+  if (isMember == false) {
+    return ctx.reply(`Sorry, this bot is only for the LondonTechCommunity`);
+  }
 
   if (isBot) {
     return ctx.reply(`Sorry I only interact with humans!`);
