@@ -109,7 +109,7 @@ exports.handler = async function (event, context) {
   // await bot.telegram.sendMessage(258865258, `Hello!`);
 
   const id = 258865258;
-  bot.telegram.sendMessage(
+  await bot.telegram.sendMessage(
     // (chat_id = parseInt(pair[0].userId)),
     (chat_id = id),
     (text = `please work!`)
