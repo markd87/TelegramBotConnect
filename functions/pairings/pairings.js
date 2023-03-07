@@ -139,24 +139,24 @@ exports.handler = async function (event, context) {
 
         await bot.telegram.sendMessage(
           (chat_id = user_1),
-          (text = `Hello! as there was an odd number of participants, you've been randomly matched with @${pair[1].username} and @${pair[2].username} for a coffee meetup. \nI hope you both have a great time getting to know each other over a cup of coffee. \nFeel free to coordinate a time and location that works for both of you. Enjoy!`)
+          (text = `Hello! as there was an odd number of participants, you've been randomly matched with @${pairs[i][1].username} and @${pairs[i][2].username} for a coffee meetup. \nI hope you both have a great time getting to know each other over a cup of coffee. \nFeel free to coordinate a time and location that works for both of you. Enjoy!`)
         );
         await bot.telegram.sendMessage(
           (chat_id = user_2),
-          (text = `Hello! as there was an odd number of participants, you've been randomly matched with @${pair[0].username} and @${pair[2].username} for a coffee meetup. \nI hope you both have a great time getting to know each other over a cup of coffee. \nFeel free to coordinate a time and location that works for both of you. Enjoy!`)
+          (text = `Hello! as there was an odd number of participants, you've been randomly matched with @${pairs[i][0].username} and @${pairs[i][2].username} for a coffee meetup. \nI hope you both have a great time getting to know each other over a cup of coffee. \nFeel free to coordinate a time and location that works for both of you. Enjoy!`)
         );
         await bot.telegram.sendMessage(
           (chat_id = user_3),
-          (text = `Hello! as there was an odd number of participants, you've been randomly matched with @${pair[0].username} and @${pair[1].username} for a coffee meetup. \nI hope you both have a great time getting to know each other over a cup of coffee. \nFeel free to coordinate a time and location that works for both of you. Enjoy!`)
+          (text = `Hello! as there was an odd number of participants, you've been randomly matched with @${pairs[i][0].username} and @${pairs[i][1].username} for a coffee meetup. \nI hope you both have a great time getting to know each other over a cup of coffee. \nFeel free to coordinate a time and location that works for both of you. Enjoy!`)
         );
       } else {
         await bot.telegram.sendMessage(
           (chat_id = user_1),
-          (text = `You've been randomly matched with @${pair[1].username} for a coffee meetup. \nI hope you both have a great time getting to know each other over a cup of coffee. \nFeel free to coordinate a time and location that works for both of you. Enjoy!`)
+          (text = `You've been randomly matched with @${pairs[i][1].username} for a coffee meetup. \nI hope you both have a great time getting to know each other over a cup of coffee. \nFeel free to coordinate a time and location that works for both of you. Enjoy!`)
         );
         await bot.telegram.sendMessage(
           (chat_id = user_2),
-          (text = `You've been randomly matched with @${pair[0].username} for a coffee meetup. \nI hope you both have a great time getting to know each other over a cup of coffee. \nFeel free to coordinate a time and location that works for both of you. Enjoy!`)
+          (text = `You've been randomly matched with @${pairs[i][0].username} for a coffee meetup. \nI hope you both have a great time getting to know each other over a cup of coffee. \nFeel free to coordinate a time and location that works for both of you. Enjoy!`)
         );
       }
     }
