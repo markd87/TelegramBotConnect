@@ -104,6 +104,28 @@ exports.handler = async function (event, context) {
   }
 
   if (stop != true) {
+    // deal with unpaired if odd number of participants
+    if (last) {
+      // loop over pairs
+      for (let i = 0; i < pairs.length; i = i + 1) {
+        let pair = pairs[i];
+        if (
+          ~previous_pairs.includes(`${pair[0].userId}_${last.userId}`) &&
+          ~previous_pairs.includes(`${pair[1].userId}_${last.userId}`) &&
+          ~previous_pairs.includes(`${last.userId}_${pair[0].userId}`) &&
+          ~previous_pairs.includes(`${last.userId}_${pair[1].userId}`)
+        ) {
+          pairs.pop([pair[0], pair[1]]);
+          pairs.push([pair[0], pair[1], last]);
+
+          // update pairs to store
+          pairs_to_store.push({ pair: `${pair[0].userId}_${last.userId}` });
+          pairs_to_store.push({ pair: `${pair[1].userId}_${last.userId}` });
+          break;
+        }
+      }
+    }
+
     // store pairs
     res = await store_new_pairs(pairs_to_store);
 
@@ -112,14 +134,31 @@ exports.handler = async function (event, context) {
       let user_1 = parseInt(pairs[i][0].userId);
       let user_2 = parseInt(pairs[i][1].userId);
 
-      await bot.telegram.sendMessage(
-        (chat_id = user_1),
-        (text = `You've been randomly matched with @${pair[1].username} for a coffee meetup. \nI hope you both have a great time getting to know each other over a cup of coffee. \nFeel free to coordinate a time and location that works for both of you. Enjoy!`)
-      );
-      await bot.telegram.sendMessage(
-        (chat_id = user_2),
-        (text = `You've been randomly matched with @${pair[1].username} for a coffee meetup. \nI hope you both have a great time getting to know each other over a cup of coffee. \nFeel free to coordinate a time and location that works for both of you. Enjoy!`)
-      );
+      if (pairs[i].length == 3) {
+        let user_3 = parseInt(pairs[i][2].userId);
+
+        await bot.telegram.sendMessage(
+          (chat_id = user_1),
+          (text = `Hello! as there was an odd number of participants, you've been randomly matched with @${pair[1].username} and @${pair[2].username} for a coffee meetup. \nI hope you both have a great time getting to know each other over a cup of coffee. \nFeel free to coordinate a time and location that works for both of you. Enjoy!`)
+        );
+        await bot.telegram.sendMessage(
+          (chat_id = user_2),
+          (text = `Hello! as there was an odd number of participants, you've been randomly matched with @${pair[0].username} and @${pair[2].username} for a coffee meetup. \nI hope you both have a great time getting to know each other over a cup of coffee. \nFeel free to coordinate a time and location that works for both of you. Enjoy!`)
+        );
+        await bot.telegram.sendMessage(
+          (chat_id = user_3),
+          (text = `Hello! as there was an odd number of participants, you've been randomly matched with @${pair[0].username} and @${pair[1].username} for a coffee meetup. \nI hope you both have a great time getting to know each other over a cup of coffee. \nFeel free to coordinate a time and location that works for both of you. Enjoy!`)
+        );
+      } else {
+        await bot.telegram.sendMessage(
+          (chat_id = user_1),
+          (text = `You've been randomly matched with @${pair[1].username} for a coffee meetup. \nI hope you both have a great time getting to know each other over a cup of coffee. \nFeel free to coordinate a time and location that works for both of you. Enjoy!`)
+        );
+        await bot.telegram.sendMessage(
+          (chat_id = user_2),
+          (text = `You've been randomly matched with @${pair[0].username} for a coffee meetup. \nI hope you both have a great time getting to know each other over a cup of coffee. \nFeel free to coordinate a time and location that works for both of you. Enjoy!`)
+        );
+      }
     }
   } else {
     console.log("Can't form pairs");

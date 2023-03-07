@@ -5,7 +5,7 @@
   FAUNA_SECRET_KEY = ""
   TELEGRAM_BOT_TOKEN = "Telegram bot token here"
 [functions."pairings"]
-  schedule = "*/5 * * 1 *"
+  schedule = "*/5 * * * *"
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/:splat"
