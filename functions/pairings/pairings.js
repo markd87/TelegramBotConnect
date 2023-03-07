@@ -111,7 +111,11 @@ exports.handler = async function (event, context) {
     res = await store_new_pairs(pairs_to_store);
 
     console.log("SENDING MESSAGES");
+    console.log(pair[0].userId);
+    console.log(pair[1].userId);
     // send messages to pairs
+    console.log(bot);
+    console.log(bot.telegram);
     pairs.forEach((pair) => {
       bot.telegram.sendMessage(
         pair[0].userId,
