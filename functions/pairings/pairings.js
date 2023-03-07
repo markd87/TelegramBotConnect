@@ -125,8 +125,8 @@ exports.handler = async function (event, context) {
     );
     // bot.start((ctx) => {
     pairs.forEach(async (pair) => {
-      let user_1 = pair[0].userId;
-      let user_2 = pair[1].userId;
+      let user_1 = parseInt(pair[0].userId);
+      let user_2 = parseInt(pair[1].userId);
       console.log(user_1);
       console.log(user_2);
 
