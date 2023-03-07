@@ -1,16 +1,10 @@
 const { getUser } = require("../components/helper");
 
-async function isMember(id) {
-  let member = ctx.telegram.getChatMember("@Test", id);
-  console.log(member);
-  return ctx.telegram.getChatMember("@Test", id);
-}
-
 module.exports = async (ctx) => {
   const { id, isBot, name, username } = getUser(ctx.from);
 
-  const isMember = ctx.telegram.getChatMember(
-    (chat_id = "Test"),
+  const isMember = await ctx.telegram.getChatMember(
+    (chat_id = -997370885),
     (uer_id = id)
   );
   console.log(isMember);
