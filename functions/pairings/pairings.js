@@ -123,8 +123,10 @@ exports.handler = async function (event, context) {
       console.log(pair[1].userId);
 
       await bot.telegram.sendMessage(
-        (chat_id = parseInt(pair[0].userId)),
-        (text = `Hello! You've been randomly matched with @${pair[1].username} for a coffee meetup. \nI hope you both have a great time getting to know each other over a cup of coffee. \nFeel free to coordinate a time and location that works for both of you. Enjoy!`)
+        // (chat_id = parseInt(pair[0].userId)),
+        (chat_id = 258865258),
+        (text = `Hello!`)
+        //  You've been randomly matched with @${pair[1].username} for a coffee meetup. \nI hope you both have a great time getting to know each other over a cup of coffee. \nFeel free to coordinate a time and location that works for both of you. Enjoy!`)
       );
       // await bot.telegram.sendMessage(
       //   (chat_id = parseInt(pair[1].userId)),
