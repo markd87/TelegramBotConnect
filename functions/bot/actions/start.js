@@ -9,7 +9,10 @@ async function isMember(id) {
 module.exports = async (ctx) => {
   const { id, isBot, name, username } = getUser(ctx.from);
 
-  const isMember = ctx.telegram.getChatMember("@Test", id);
+  const isMember = ctx.telegram.getChatMember(
+    (chat_id = "Test"),
+    (uer_id = id)
+  );
   console.log(isMember);
 
   if (isMember == false) {
