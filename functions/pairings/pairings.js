@@ -116,21 +116,22 @@ exports.handler = async function (event, context) {
 
     console.log("SENDING MESSAGES");
     // send messages to pairs
-    console.log(bot);
-    console.log(bot.telegram);
 
-    bot.start((ctx) => {
-      pairs.forEach(async (pair) => {
-        await ctx.telegram.sendMessage(
-          pair[0].userId,
-          `Hello! You've been randomly matched with @${pair[1].username} for a coffee meetup. \nI hope you both have a great time getting to know each other over a cup of coffee. \nFeel free to coordinate a time and location that works for both of you. Enjoy!`
-        );
-        await ctx.telegram.sendMessage(
-          pair[1].userId,
-          `Hello! You've been randomly matched with @${pair[0].username} for a coffee meetup. \nI hope you both have a great time getting to know each other over a cup of coffee. \nFeel free to coordinate a time and location that works for both of you. Enjoy!`
-        );
-      });
+    // bot.start((ctx) => {
+    pairs.forEach(async (pair) => {
+      console.log(pair[0].userId);
+      console.log(pair[1].userId);
+
+      await bot.telegram.sendMessage(
+        parseInt(pair[0].userId),
+        `Hello! You've been randomly matched with @${pair[1].username} for a coffee meetup. \nI hope you both have a great time getting to know each other over a cup of coffee. \nFeel free to coordinate a time and location that works for both of you. Enjoy!`
+      );
+      await bot.telegram.sendMessage(
+        parseInt(pair[1].userId),
+        `Hello! You've been randomly matched with @${pair[0].username} for a coffee meetup. \nI hope you both have a great time getting to know each other over a cup of coffee. \nFeel free to coordinate a time and location that works for both of you. Enjoy!`
+      );
     });
+    // });
 
     // pairs.forEach((pair) => {
     //   bot.telegram.sendMessage(
