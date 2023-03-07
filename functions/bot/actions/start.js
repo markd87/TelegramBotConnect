@@ -7,9 +7,9 @@ module.exports = async (ctx) => {
     (chat_id = -997370885),
     (uer_id = id)
   );
-  console.log(isMember);
+  console.log(isMember.status);
 
-  if (isMember == false) {
+  if (isMember.status != "member") {
     return ctx.reply(`Sorry, this bot is only for the LondonTechCommunity`);
   }
 
