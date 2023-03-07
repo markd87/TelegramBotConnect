@@ -18,7 +18,7 @@ module.exports = async (ctx) => {
   }
 
   ctx.reply(
-    `Welcome to LondonTechConnect 👋 🇺🇦 🇬🇧 , the bot that helps you meet new people over a cup of coffee!. 
+    `Welcome to LondonTechCoffee 👋 🇺🇦 🇬🇧 , the bot that helps you meet new people over a cup of coffee!
     \nWhether you're new to London or just looking to expand your network, our bot will match you with a random person in the chat for a friendly chat and a hot drink ☕. 
     \n\nTo join our weekly pairings, simply type /join in the chat. 
     \nIf you need to pause the pairings for any reason, use the /pause command. 
