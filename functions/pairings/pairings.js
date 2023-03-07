@@ -125,25 +125,12 @@ exports.handler = async function (event, context) {
     console.log("SENDING MESSAGES");
     // send messages to pairs
 
-    await bot.telegram.sendMessage(
-      // (chat_id = parseInt(pair[0].userId)),
-      (chat_id = 258865258),
-      (text = `Hello! it works`)
-      //  You've been randomly matched with @${pair[1].username} for a coffee meetup. \nI hope you both have a great time getting to know each other over a cup of coffee. \nFeel free to coordinate a time and location that works for both of you. Enjoy!`)
-    );
     // bot.start((ctx) => {
     pairs.forEach(async (pair) => {
-      let user_1 = parseInt(pair[0].userId);
-      let user_2 = parseInt(pair[1].userId);
+      const user_1 = parseInt(pair[0].userId);
+      const user_2 = parseInt(pair[1].userId);
       console.log(user_1);
       console.log(user_2);
-
-      await bot.telegram.sendMessage(
-        // (chat_id = parseInt(pair[0].userId)),
-        (chat_id = 258865258),
-        (text = `Hello!`)
-        //  You've been randomly matched with @${pair[1].username} for a coffee meetup. \nI hope you both have a great time getting to know each other over a cup of coffee. \nFeel free to coordinate a time and location that works for both of you. Enjoy!`)
-      );
 
       await bot.telegram.sendMessage(
         // (chat_id = parseInt(pair[0].userId)),
