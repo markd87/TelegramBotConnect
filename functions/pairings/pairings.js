@@ -110,10 +110,10 @@ exports.handler = async function (event, context) {
       for (let i = 0; i < pairs.length; i = i + 1) {
         let pair = pairs[i];
         if (
-          ~previous_pairs.includes(`${pair[0].userId}_${last.userId}`) &&
-          ~previous_pairs.includes(`${pair[1].userId}_${last.userId}`) &&
-          ~previous_pairs.includes(`${last.userId}_${pair[0].userId}`) &&
-          ~previous_pairs.includes(`${last.userId}_${pair[1].userId}`)
+          !previous_pairs.includes(`${pair[0].userId}_${last.userId}`) &&
+          !previous_pairs.includes(`${pair[1].userId}_${last.userId}`) &&
+          !previous_pairs.includes(`${last.userId}_${pair[0].userId}`) &&
+          !previous_pairs.includes(`${last.userId}_${pair[1].userId}`)
         ) {
           pairs.pop([pair[0], pair[1]]);
           pairs.push([pair[0], pair[1], last]);

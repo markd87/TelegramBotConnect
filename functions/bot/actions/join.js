@@ -22,7 +22,7 @@ module.exports = async (ctx) => {
       //       "This week you are meeting @Massiania! say Hi to Mark and schedule your meeting :)")
       //   );
       return ctx.reply(
-        `Thank you for joining LondonTechConnect! You have been added to our weekly pairings list, and we'll be in touch soon with details on your coffee match.`
+        `Thank you for joining LondonTechCoffee! You have been added to our weekly pairings list, and we'll be in touch soon with details on your coffee match.`
       );
     } else {
       return ctx.reply(
