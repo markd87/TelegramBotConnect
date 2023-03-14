@@ -61,6 +61,10 @@ bot.command("next", (ctx) => {
   return ctx.scene.enter("super-wizard");
 });
 
+bot.command("cancel", (ctx) => {
+  return ctx.reply("No problem");
+});
+
 exports.handler = async (event) => {
   try {
     await bot.handleUpdate(JSON.parse(event.body));

@@ -25,9 +25,19 @@ module.exports = async (ctx) => {
       //       "This week you are meeting @Massiania! say Hi to Mark and schedule your meeting :)")
       //   );
 
-      await ctx.reply(
-        `Welcome! Thank you for joining LondonTechCoffee.\nBefore we match you with someone for a random coffee in our weekly pairings, could you please answer a few quick questions:\n\n`
+      ctx.reply(
+        `Welcome! Thank you for joining LondonTechCoffee.\nBefore we match you with someone for a random coffee in our weekly pairings, could you please answer a few quick questions.\n`
       );
+      await ctx.reply(
+        "To start click next bellow:",
+        Markup.inlineKeyboard([
+          [
+            Markup.button.callback("Next", "next"),
+            Markup.button.callback("Cancel", "cancel"),
+          ],
+        ])
+      );
+
       //   let name = await
       //   ctx.scene.enter("super-wizard");
 
