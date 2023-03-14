@@ -17,7 +17,7 @@ exports.checkNewUser = (id) => {
   });
 };
 
-exports.newUser = (id, name, username) => {
+exports.newUser = (id, name, username, occupation, instagram, linkedin) => {
   console.log(id);
 
   return new Promise((res, rej) => {
@@ -29,6 +29,9 @@ exports.newUser = (id, name, username) => {
             participate: true,
             name: name,
             username: username,
+            occupation: occupation,
+            instagram: instagram,
+            linkedin: linkedin,
           },
         })
       )
