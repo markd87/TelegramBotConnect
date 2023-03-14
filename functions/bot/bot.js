@@ -1,4 +1,4 @@
-const { Telegraf, session, Scenes } = require("telegraf");
+const { Telegraf, session, Scenes, Composer } = require("telegraf");
 
 // const WizardScene = require("telegraf/scenes/wizard");
 
@@ -11,6 +11,19 @@ const startAction = require("./actions/start");
 //   })
 // );
 
+const stepHandler = new Composer();
+stepHandler.action("next", (ctx) => {
+  ctx.reply("Step 2. Via inline button");
+  return ctx.wizard.next();
+});
+stepHandler.command("next", (ctx) => {
+  ctx.reply("Step 2. Via command");
+  return ctx.wizard.next();
+});
+stepHandler.use((ctx) =>
+  ctx.replyWithMarkdown("Press `Next` button or type /next")
+);
+
 const superWizard = new Scenes.WizardScene(
   "super-wizard",
   (ctx) => {
@@ -19,25 +32,25 @@ const superWizard = new Scenes.WizardScene(
     );
 
     ctx.wizard.next();
-    return ctx.wizard.step(ctx, next);
+    return ctx.wizard.steps[ctx.wizard.cursor](ctx);
   },
   (ctx) => {
     ctx.wizard.state.name = ctx.message.text;
     ctx.reply("What is your occupation?");
     ctx.wizard.next();
-    return ctx.wizard.step(ctx, next);
+    return ctx.wizard.steps[ctx.wizard.cursor](ctx);
   },
   (ctx) => {
     ctx.wizard.state.occupation = ctx.message.text;
     ctx.reply("What is your instagram username?");
     ctx.wizard.next();
-    return ctx.wizard.step(ctx, next);
+    return ctx.wizard.steps[ctx.wizard.cursor](ctx);
   },
   (ctx) => {
     ctx.wizard.state.instagram = ctx.message.text;
     ctx.reply("What is your linkedin profile link?");
     ctx.wizard.next();
-    return ctx.wizard.step(ctx, next);
+    return ctx.wizard.steps[ctx.wizard.cursor](ctx);
   },
   (ctx) => {
     ctx.wizard.state.linkedin = ctx.message.text;
