@@ -17,29 +17,29 @@ const superWizard = new Scenes.WizardScene(
   (ctx) => {
     ctx.reply(`What is your name?`);
     ctx.scene.session.user = {};
-    ctx.wizard.next();
+    return ctx.wizard.next();
   },
   (ctx) => {
     ctx.scene.session.user.name = ctx.message.text;
     ctx.reply("What is your occupation?");
-    ctx.wizard.next();
+    return ctx.wizard.next();
   },
   (ctx) => {
     ctx.scene.session.user.occupation = ctx.message.text;
     ctx.reply("What is your instagram username?");
-    ctx.wizard.next();
+    return ctx.wizard.next();
   },
   (ctx) => {
     ctx.scene.session.user.instagram = ctx.message.text;
     ctx.reply("What is your linkedin profile link?");
-    ctx.wizard.next();
+    return ctx.wizard.next();
   },
   (ctx) => {
     ctx.scene.session.user.linkedin = ctx.message.text;
     ctx.reply(
       "Thank you! You have been added to our weekly pairings list, and we'll be in touch soon with details on your coffee match."
     );
-    ctx.scene.leave();
+    return ctx.scene.leave();
   }
 );
 const stage = new Scenes.Stage([superWizard]);
