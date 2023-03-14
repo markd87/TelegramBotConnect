@@ -1,5 +1,5 @@
 const { Telegraf } = require("telegraf");
-const { TelegrafQuestion } = require("telegraf-question");
+import TelegrafQuestion from "telegraf-question";
 const startAction = require("./actions/start");
 
 const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN);
