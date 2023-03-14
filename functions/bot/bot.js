@@ -19,7 +19,6 @@ const superWizard = new Scenes.WizardScene(
     );
     ctx.reply(`What is your name?`);
     ctx.scene.session.user = {};
-    ctx.scene.session.user.userId = ctx.update.callback_query.from.id;
     return ctx.wizard.next();
   },
   (ctx) => {
@@ -40,8 +39,8 @@ const superWizard = new Scenes.WizardScene(
   (ctx) => {
     ctx.scene.session.user.linkedin = ctx.message.text;
     ctx.reply("Thank you!");
-    ctx.reply(`Your name is ${ctx.wizard.state.name}`);
-    ctx.reply(`Your occupation is ${ctx.wizard.state.occupation}`);
+    ctx.reply(`Your name is ${ctx.scene.session.user.name}`);
+    ctx.reply(`Your occupation is ${ctx.scene.session.user.occupation}`);
     ctx.reply(
       `You have been added to our weekly pairings list, and we'll be in touch soon with details on your coffee match.`
     );
