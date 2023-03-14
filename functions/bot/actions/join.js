@@ -34,7 +34,7 @@ module.exports = async (ctx) => {
         Markup.inlineKeyboard([
           [
             Markup.button.callback("Next", "next"),
-            Markup.button.callback("Cancel", "cancel"),
+            Markup.button.callback("Cancel", "cancel_start"),
           ],
         ])
       );
