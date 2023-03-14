@@ -24,16 +24,10 @@ const superWizard = new Scenes.WizardScene(
     return ctx.wizard.next();
   },
   (ctx) => {
-    console.log(ctx.update);
-    if (ctx.update.callback_query.data == "cancel") {
-      ctx.reply(
-        "No problem! if you change your mind and want to participate, feel free to message /join again"
-      );
-      return ctx.scene.leave();
-    }
     if (ctx.update.callback_query.data == "skip") {
-      ctx.update.callback_query.data = "next";
+      ctx.scene.session.user.name = "Not available";
 
+      ctx.update.callback_query.data = "next";
       return ctx.wizard.steps[ctx.wizard.cursor - 1](ctx);
     }
     ctx.scene.session.user.name = ctx.message.text;
@@ -49,20 +43,15 @@ const superWizard = new Scenes.WizardScene(
     return ctx.wizard.next();
   },
   (ctx) => {
-    if (ctx.update.callback_query.data == "cancel") {
-      ctx.reply(
-        "No problem! if you change your mind and want to participate, feel free to message /join again"
-      );
-      return ctx.scene.leave();
-    }
     if (ctx.update.callback_query.data == "skip") {
       ctx.update.callback_query.data = "next";
-      return ctx.wizard.next();
+      ctx.scene.session.user.occupation = "Not available";
+      return ctx.wizard.steps[ctx.wizard.cursor - 1](ctx);
     }
 
     ctx.scene.session.user.occupation = ctx.message.text;
     ctx.reply(
-      "What is your instagram username?",
+      "What is your Instagram username?",
       Markup.inlineKeyboard([
         [
           Markup.button.callback("Cancel", "cancel"),
@@ -73,15 +62,10 @@ const superWizard = new Scenes.WizardScene(
     return ctx.wizard.next();
   },
   (ctx) => {
-    if (ctx.update.callback_query.data == "cancel") {
-      ctx.reply(
-        "No problem! if you change your mind and want to participate, feel free to message /join again"
-      );
-      return ctx.scene.leave();
-    }
     if (ctx.update.callback_query.data == "skip") {
       ctx.update.callback_query.data = "next";
-      return ctx.wizard.next();
+      ctx.scene.session.user.instagram = "Not available";
+      return ctx.wizard.steps[ctx.wizard.cursor - 1](ctx);
     }
 
     ctx.scene.session.user.instagram = ctx.message.text;
@@ -97,13 +81,14 @@ const superWizard = new Scenes.WizardScene(
     return ctx.wizard.next();
   },
   async (ctx) => {
-    if (ctx.update.callback_query.data == "cancel") {
-      ctx.reply(
-        "No problem! if you change your mind and want to participate, feel free to message /join again"
-      );
-      return ctx.scene.leave();
+    if (ctx.update.callback_query.data == "skip") {
+      ctx.update.callback_query.data = "next";
+      ctx.scene.session.user.linkedin = "Not available";
+      return ctx.wizard.steps[ctx.wizard.cursor - 1](ctx);
+    } else {
+      ctx.scene.session.user.linkedin = ctx.message.text;
     }
-    ctx.scene.session.user.linkedin = ctx.message.text;
+
     const { id, t_name, isbot, username } = getUser(ctx.from);
     const res = await newUser(
       id,
