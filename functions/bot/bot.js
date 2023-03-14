@@ -25,7 +25,7 @@ const superWizard = new Scenes.WizardScene(
       ctx.scene.session.user.name = "Not available";
 
       ctx.update.callback_query.data = "next";
-      return ctx.wizard.steps[ctx.wizard.cursor - 1](ctx);
+      return ctx.wizard.steps[2](ctx);
     }
     await ctx.reply(
       "What is your occupation?",
