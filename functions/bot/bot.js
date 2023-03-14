@@ -24,7 +24,9 @@ const superWizard = new Scenes.WizardScene(
     return ctx.wizard.next();
   },
   (ctx) => {
-    if (ctx.callback_query.data == "cancel") {
+    console.log(ctx.message);
+
+    if (ctx.message.data == "cancel") {
       ctx.scene.leave();
     }
     ctx.scene.session.user.name = ctx.message.text;
@@ -40,7 +42,9 @@ const superWizard = new Scenes.WizardScene(
     return ctx.wizard.next();
   },
   (ctx) => {
-    if (ctx.callback_query.data == "cancel") {
+    console.log(ctx.message);
+
+    if (ctx.message.data == "cancel") {
       ctx.scene.leave();
     }
     ctx.scene.session.user.occupation = ctx.message.text;
@@ -56,7 +60,9 @@ const superWizard = new Scenes.WizardScene(
     return ctx.wizard.next();
   },
   (ctx) => {
-    if (ctx.callback_query.data == "cancel") {
+    console.log(ctx.message);
+
+    if (ctx.message.data == "cancel") {
       ctx.scene.leave();
     }
     ctx.scene.session.user.instagram = ctx.message.text;
