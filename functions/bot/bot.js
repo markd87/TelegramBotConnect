@@ -28,7 +28,7 @@ const superWizard = new Scenes.WizardScene(
     } else if (ctx.update.callback_query.data == "skip") {
       ctx.update.callback_query.data = "next";
       ctx.scene.session.user.occupation = "Not available";
-      return ctx.wizard.steps[ctx.wizard.cursor - 1](ctx);
+      return ctx.wizard.steps[ctx.wizard.cursor](ctx);
     }
 
     await ctx.reply(
@@ -43,7 +43,7 @@ const superWizard = new Scenes.WizardScene(
     } else if (ctx.update.callback_query.data == "skip") {
       ctx.update.callback_query.data = "next";
       ctx.scene.session.user.instagram = "Not available";
-      return ctx.wizard.steps[ctx.wizard.cursor - 1](ctx);
+      return ctx.wizard.steps[ctx.wizard.cursor](ctx);
     }
 
     await ctx.reply(
