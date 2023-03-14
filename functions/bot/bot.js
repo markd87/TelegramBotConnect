@@ -12,9 +12,6 @@ const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN);
 //   })
 // );
 
-Scenes.WizardScene.prototype.enterMiddleware =
-  Scenes.WizardScene.prototype.middleware;
-
 const superWizard = new Scenes.WizardScene(
   "super-wizard",
   (ctx) => {
@@ -59,6 +56,10 @@ bot.command("join", require("./actions/join"));
 bot.command("pause", require("./actions/pause"));
 bot.command("resume", require("./actions/resume"));
 bot.command("remove", require("./actions/remove"));
+
+bot.command("next", (ctx) => {
+  return ctx.scene.enter("super-wizard");
+});
 
 exports.handler = async (event) => {
   try {
