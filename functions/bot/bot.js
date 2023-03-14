@@ -16,7 +16,7 @@ const superWizard = new Scenes.WizardScene(
       Markup.inlineKeyboard([Markup.button.callback("Skip", "skip")])
     );
     ctx.scene.session.user = {};
-    return ctx.wizard.next();
+    return ctx.wizard.steps[ctx.wizard.cursor - 1](ctx);
   },
   async (ctx) => {
     if (ctx.message != undefined) {
@@ -25,7 +25,7 @@ const superWizard = new Scenes.WizardScene(
       ctx.scene.session.user.name = "Not available";
 
       ctx.update.callback_query.data = "next";
-      return ctx.wizard.steps[2](ctx);
+      return ctx.wizard.steps[ctx.wizard.cursor - 1](ctx);
     }
     await ctx.reply(
       "What is your occupation?",
@@ -69,7 +69,6 @@ const superWizard = new Scenes.WizardScene(
     } else if (ctx.update.callback_query.data == "skip") {
       ctx.update.callback_query.data = "next";
       ctx.scene.session.user.linkedin = "Not available";
-      return ctx.wizard.steps[ctx.wizard.cursor - 1](ctx);
     }
 
     const { id, t_name, isbot, username } = getUser(ctx.from);
