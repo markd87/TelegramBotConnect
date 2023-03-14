@@ -1,4 +1,4 @@
-const { Telegraf } = require("telegraf");
+const Telegraf = require("telegraf");
 const session = require("telegraf/session");
 const Stage = require("telegraf/stage");
 const WizardScene = require("telegraf/scenes/wizard");
@@ -6,7 +6,6 @@ const WizardScene = require("telegraf/scenes/wizard");
 // import TelegrafQuestion from "telegraf-question";
 const startAction = require("./actions/start");
 
-const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN);
 // bot.use(
 //   TelegrafQuestion({
 //     cancelTimeout: 300000, // 5 min
@@ -32,8 +31,9 @@ const superWizard = new WizardScene(
     return ctx.scene.leave();
   }
 );
-const stage = new Stage([superWizard], { default: "super-wizard" });
+const stage = new Stage([superWizard]);
 
+const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN);
 bot.use(session());
 bot.use(stage.middleware());
 
