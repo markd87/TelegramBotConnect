@@ -24,9 +24,9 @@ const superWizard = new Scenes.WizardScene(
     return ctx.wizard.next();
   },
   (ctx) => {
-    console.log(ctx.message);
+    console.log(ctx);
 
-    if (ctx.message.data == "cancel") {
+    if (ctx.data == "cancel") {
       ctx.scene.leave();
     }
     ctx.scene.session.user.name = ctx.message.text;
