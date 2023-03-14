@@ -5,6 +5,7 @@ const { Telegraf, session, Scenes } = require("telegraf");
 // import TelegrafQuestion from "telegraf-question";
 const startAction = require("./actions/start");
 
+const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN);
 // bot.use(
 //   TelegrafQuestion({
 //     cancelTimeout: 300000, // 5 min
@@ -35,18 +36,15 @@ const superWizard = new Scenes.WizardScene(
   },
   (ctx) => {
     ctx.scene.session.user.linkedin = ctx.message.text;
-    ctx.reply("Thank you!");
-    ctx.reply(`Your name is ${ctx.scene.session.user.name}`);
-    ctx.reply(`Your occupation is ${ctx.scene.session.user.occupation}`);
     ctx.reply(
-      `You have been added to our weekly pairings list, and we'll be in touch soon with details on your coffee match.`
+      "Thank you! You have been added to our weekly pairings list, and we'll be in touch soon with details on your coffee match."
     );
+
     return ctx.scene.leave();
   }
 );
 const stage = new Scenes.Stage([superWizard]);
 
-const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN);
 bot.use(session());
 bot.use(stage.middleware());
 

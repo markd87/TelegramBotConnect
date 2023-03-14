@@ -11,6 +11,6 @@
   "license": "ISC",
   "dependencies": {
     "faunadb": "^4.7.1",
-    "telegraf": "^4.11.2"
+    "telegraf": "^4.12.2"
   }
 }
