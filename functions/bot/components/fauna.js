@@ -8,7 +8,7 @@ exports.checkNewUser = (id) => {
     client
       .query(q.Exists(q.Match(q.Index("userId"), id)))
       .then((ret) => {
-        res(ret);
+        res(!ret);
       })
       .catch((err) => {
         console.log(err);

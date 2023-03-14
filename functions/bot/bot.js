@@ -1,7 +1,13 @@
 const { Telegraf } = require("telegraf");
 const startAction = require("./actions/start");
+const { TelegrafQuestion } = require("telegraf-question");
 
 const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN);
+bot.use(
+  TelegrafQuestion({
+    cancelTimeout: 300000, // 5 min
+  })
+);
 
 bot.start((ctx) => {
   return startAction(ctx);
