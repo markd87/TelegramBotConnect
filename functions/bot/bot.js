@@ -16,7 +16,7 @@ const superWizard = new Scenes.WizardScene(
       Markup.inlineKeyboard([Markup.button.callback("Skip", "skip")])
     );
     ctx.scene.session.user = {};
-    return ctx.wizard.steps[ctx.wizard.cursor - 1](ctx);
+    return ctx.wizard.next();
   },
   async (ctx) => {
     if (ctx.message != undefined) {
