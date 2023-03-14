@@ -18,22 +18,26 @@ const superWizard = new Scenes.WizardScene(
       `Welcome! Thank you for joining LondonTechCoffee.\nBefore we match you with someone for a random coffee in our weekly pairings, could you please answer a few quick questions:\n\nWhat is your name?"`
     );
 
-    return ctx.wizard.next();
+    ctx.wizard.next();
+    return ctx.wizard.steps[ctx.wizard.cursor](ctx);
   },
   (ctx) => {
     ctx.wizard.state.name = ctx.message.text;
     ctx.reply("What is your occupation?");
-    return ctx.wizard.next();
+    ctx.wizard.next();
+    return ctx.wizard.steps[ctx.wizard.cursor](ctx);
   },
   (ctx) => {
     ctx.wizard.state.occupation = ctx.message.text;
     ctx.reply("What is your instagram username?");
-    return ctx.wizard.next();
+    ctx.wizard.next();
+    return ctx.wizard.steps[ctx.wizard.cursor](ctx);
   },
   (ctx) => {
     ctx.wizard.state.instagram = ctx.message.text;
     ctx.reply("What is your linkedin profile link?");
-    return ctx.wizard.next();
+    ctx.wizard.next();
+    return ctx.wizard.steps[ctx.wizard.cursor](ctx);
   },
   (ctx) => {
     ctx.wizard.state.linkedin = ctx.message.text;
