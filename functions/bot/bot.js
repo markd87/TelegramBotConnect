@@ -142,10 +142,6 @@ bot.action("cancelstart", (ctx) => {
   );
 });
 
-bot.action("skip", (ctx) => {
-  return ctx.wizard.next();
-});
-
 exports.handler = async (event) => {
   try {
     await bot.handleUpdate(JSON.parse(event.body));
