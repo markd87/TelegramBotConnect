@@ -107,14 +107,14 @@ bot.action("cancelstart", (ctx) => {
   );
 });
 
-bot.action("cancel", (ctx) => {
+stage.action("cancel", (ctx) => {
   ctx.scene.leave();
   return ctx.reply(
     "No problem! if you change your mind and want to participate, feel free to message /join again"
   );
 });
 
-bot.action("skip", (ctx) => {
+stage.action("skip", (ctx) => {
   return ctx.wizard.next();
 });
 
