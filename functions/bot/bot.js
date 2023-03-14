@@ -19,6 +19,7 @@ const superWizard = new Scenes.WizardScene(
     return ctx.wizard.next();
   },
   (ctx) => {
+    console.log(ctx.message.text);
     if (ctx.message.text) {
       ctx.scene.session.user.name = ctx.message.text;
     } else if (ctx.update.callback_query.data == "skip") {
@@ -34,6 +35,7 @@ const superWizard = new Scenes.WizardScene(
     return ctx.wizard.next();
   },
   (ctx) => {
+    console.log(ctx.message.text);
     if (ctx.message.text) {
       ctx.scene.session.user.occupation = ctx.message.text;
     } else if (ctx.update.callback_query.data == "skip") {
