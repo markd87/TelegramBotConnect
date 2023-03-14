@@ -26,7 +26,7 @@ module.exports = async (ctx) => {
       //   );
 
       //   let name = await
-      await ctx.scene.enter("super-wizard");
+      ctx.scene.enter("super-wizard");
       //   let occupation = await ctx.reply("What is your occupation?");
       //   console.log(name);
       //   console.log(occupation);

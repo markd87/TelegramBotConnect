@@ -15,8 +15,9 @@ const superWizard = new Scenes.WizardScene(
   "super-wizard",
   (ctx) => {
     ctx.reply(
-      `Welcome! Thank you for joining LondonTechCoffee.\nBefore we match you with someone for a random coffee in our weekly pairings, could you please answer a few quick questions:\n\nWhat is your name?"`
+      `Welcome! Thank you for joining LondonTechCoffee.\nBefore we match you with someone for a random coffee in our weekly pairings, could you please answer a few quick questions:\n\n`
     );
+    ctx.reply(`What is your name?`);
     ctx.scene.session.user = {};
     ctx.scene.session.user.userId = ctx.update.callback_query.from.id;
     return ctx.wizard.next();
