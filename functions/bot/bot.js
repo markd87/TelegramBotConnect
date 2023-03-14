@@ -16,22 +16,22 @@ const superWizard = new Scenes.WizardScene(
   (ctx) => {
     ctx.reply(`What is your name?`);
     ctx.scene.session.user = {};
-    return ctx.wizard.next();
+    ctx.wizard.next();
   },
   (ctx) => {
     ctx.scene.session.user.name = ctx.message.text;
     ctx.reply("What is your occupation?");
-    return ctx.wizard.next();
+    ctx.wizard.next();
   },
   (ctx) => {
     ctx.scene.session.user.occupation = ctx.message.text;
     ctx.reply("What is your instagram username?");
-    return ctx.wizard.next();
+    ctx.wizard.next();
   },
   (ctx) => {
     ctx.scene.session.user.instagram = ctx.message.text;
     ctx.reply("What is your linkedin profile link?");
-    return ctx.wizard.next();
+    ctx.wizard.next();
   },
   (ctx) => {
     ctx.scene.session.user.linkedin = ctx.message.text;
