@@ -22,7 +22,6 @@ const superWizard = new Scenes.WizardScene(
     ctx.scene.session.user.userId = ctx.update.callback_query.from.id;
     return ctx.wizard.next();
   },
-  stepHandler,
   (ctx) => {
     ctx.scene.session.user.name = ctx.message.text;
     ctx.reply("What is your occupation?");
