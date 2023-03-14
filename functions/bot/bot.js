@@ -17,32 +17,32 @@ Scenes.WizardScene.prototype.enterMiddleware =
 
 const superWizard = new Scenes.WizardScene(
   "super-wizard",
-  async (ctx) => {
+  (ctx) => {
     ctx.reply(`What is your name?`);
     ctx.scene.session.user = {};
-    return ctx.wizard.next();
+    ctx.wizard.next();
   },
   (ctx) => {
     ctx.scene.session.user.name = ctx.message.text;
     ctx.reply("What is your occupation?");
-    return ctx.wizard.next();
+    ctx.wizard.next();
   },
   (ctx) => {
     ctx.scene.session.user.occupation = ctx.message.text;
     ctx.reply("What is your instagram username?");
-    return ctx.wizard.next();
+    ctx.wizard.next();
   },
   (ctx) => {
     ctx.scene.session.user.instagram = ctx.message.text;
     ctx.reply("What is your linkedin profile link?");
-    return ctx.wizard.next();
+    ctx.wizard.next();
   },
   (ctx) => {
     ctx.scene.session.user.linkedin = ctx.message.text;
     ctx.reply(
       "Thank you! You have been added to our weekly pairings list, and we'll be in touch soon with details on your coffee match."
     );
-    return ctx.scene.leave();
+    ctx.scene.leave();
   }
 );
 const stage = new Scenes.Stage([superWizard]);
