@@ -1,7 +1,7 @@
 const { newUser, checkNewUser } = require("../components/fauna");
 const { getUser } = require("../components/helper");
 
-import { superWizard } from "../bot";
+const { superWizard } = require("../bot");
 
 module.exports = async (ctx) => {
   const { id, isBot, name, username } = getUser(ctx.from);
