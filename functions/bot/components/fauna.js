@@ -3,16 +3,18 @@ const faunadb = require("faunadb");
 const client = new faunadb.Client({ secret: process.env.FAUNA_SECRET_KEY });
 const q = faunadb.query;
 
-exports.checkNewUser = async (id) => {
-  try {
-    const ret = await new Promise((res, rej) => {
-      client.query(q.Exists(q.Match(q.Index("userId"), id)));
-    });
-    res(ret);
-  } catch (err) {
-    console.log(err);
-    res(false);
-  }
+exports.checkNewUser = (id) => {
+  return new Promise((res, rej) => {
+    client
+      .query(q.Exists(q.Match(q.Index("userId"), id)))
+      .then((ret) => {
+        res(ret);
+      })
+      .catch((err) => {
+        console.log(err);
+        res(false);
+      });
+  });
 };
 
 exports.newUser = (id, name, username) => {
