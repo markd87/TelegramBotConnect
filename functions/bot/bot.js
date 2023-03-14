@@ -12,7 +12,7 @@ const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN);
 //   })
 // );
 
-const superWizard = new Scenes.WizardScene(
+export const superWizard = new Scenes.WizardScene(
   "super-wizard",
   // (ctx) => {
   //   ctx.reply(`What is your name?`);
