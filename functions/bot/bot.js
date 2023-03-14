@@ -1,4 +1,4 @@
-const { Telegraf, session, Scenes, Composer } = require("telegraf");
+const { Telegraf, session, Scenes } = require("telegraf");
 
 // const WizardScene = require("telegraf/scenes/wizard");
 
@@ -11,48 +11,34 @@ const startAction = require("./actions/start");
 //   })
 // );
 
-const stepHandler = new Composer();
-stepHandler.action("next", (ctx) => {
-  ctx.reply("Step 2. Via inline button");
-  return ctx.wizard.next();
-});
-stepHandler.command("next", (ctx) => {
-  ctx.reply("Step 2. Via command");
-  return ctx.wizard.next();
-});
-stepHandler.use((ctx) =>
-  ctx.replyWithMarkdown("Press `Next` button or type /next")
-);
-
 const superWizard = new Scenes.WizardScene(
   "super-wizard",
   (ctx) => {
     ctx.reply(
       `Welcome! Thank you for joining LondonTechCoffee.\nBefore we match you with someone for a random coffee in our weekly pairings, could you please answer a few quick questions:\n\nWhat is your name?"`
     );
+    ctx.scene.session.user = {};
+    ctx.scene.session.user.userId = ctx.update.callback_query.from.id;
     return ctx.wizard.next();
   },
   stepHandler,
   (ctx) => {
-    ctx.wizard.state.name = ctx.message.text;
+    ctx.scene.session.user.name = ctx.message.text;
     ctx.reply("What is your occupation?");
-    ctx.wizard.next();
-    return ctx.wizard.steps[ctx.wizard.cursor](ctx);
+    return ctx.wizard.next();
   },
   (ctx) => {
-    ctx.wizard.state.occupation = ctx.message.text;
+    ctx.scene.session.user.occupation = ctx.message.text;
     ctx.reply("What is your instagram username?");
-    ctx.wizard.next();
-    return ctx.wizard.steps[ctx.wizard.cursor](ctx);
+    return ctx.wizard.next();
   },
   (ctx) => {
-    ctx.wizard.state.instagram = ctx.message.text;
+    ctx.scene.session.user.instagram = ctx.message.text;
     ctx.reply("What is your linkedin profile link?");
-    ctx.wizard.next();
-    return ctx.wizard.steps[ctx.wizard.cursor](ctx);
+    return ctx.wizard.next();
   },
   (ctx) => {
-    ctx.wizard.state.linkedin = ctx.message.text;
+    ctx.scene.session.user.linkedin = ctx.message.text;
     ctx.reply("Thank you!");
     ctx.reply(`Your name is ${ctx.wizard.state.name}`);
     ctx.reply(`Your occupation is ${ctx.wizard.state.occupation}`);
