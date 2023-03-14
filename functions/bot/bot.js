@@ -13,12 +13,7 @@ const superWizard = new Scenes.WizardScene(
   (ctx) => {
     ctx.reply(
       `What is your name?`,
-      Markup.inlineKeyboard([
-        [
-          Markup.button.callback("Cancel", "cancel"),
-          Markup.button.callback("Skip", "skip"),
-        ],
-      ])
+      Markup.inlineKeyboard([Markup.button.callback("Skip", "skip")])
     );
     ctx.scene.session.user = {};
     return ctx.wizard.next();
@@ -33,12 +28,7 @@ const superWizard = new Scenes.WizardScene(
     ctx.scene.session.user.name = ctx.message.text;
     ctx.reply(
       "What is your occupation?",
-      Markup.inlineKeyboard([
-        [
-          Markup.button.callback("Cancel", "cancel"),
-          Markup.button.callback("Skip", "skip"),
-        ],
-      ])
+      Markup.inlineKeyboard([Markup.button.callback("Skip", "skip")])
     );
     return ctx.wizard.next();
   },
@@ -52,12 +42,7 @@ const superWizard = new Scenes.WizardScene(
     ctx.scene.session.user.occupation = ctx.message.text;
     ctx.reply(
       "What is your Instagram username?",
-      Markup.inlineKeyboard([
-        [
-          Markup.button.callback("Cancel", "cancel"),
-          Markup.button.callback("Skip", "skip"),
-        ],
-      ])
+      Markup.inlineKeyboard([Markup.button.callback("Skip", "skip")])
     );
     return ctx.wizard.next();
   },
@@ -71,12 +56,7 @@ const superWizard = new Scenes.WizardScene(
     ctx.scene.session.user.instagram = ctx.message.text;
     ctx.reply(
       "What is your linkedin profile link?",
-      Markup.inlineKeyboard([
-        [
-          Markup.button.callback("Cancel", "cancel"),
-          Markup.button.callback("Skip", "skip"),
-        ],
-      ])
+      Markup.inlineKeyboard([Markup.button.callback("Skip", "skip")])
     );
     return ctx.wizard.next();
   },
