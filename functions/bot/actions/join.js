@@ -24,9 +24,6 @@ module.exports = async (ctx) => {
       //     (text =
       //       "This week you are meeting @Massiania! say Hi to Mark and schedule your meeting :)")
       //   );
-      ctx.reply(
-        `Welcome! Thank you for joining LondonTechCoffee.\nBefore we match you with someone for a random coffee in our weekly pairings, could you please answer a few quick questions:`
-      );
 
       //   let name = await
       await ctx.scene.enter("super-wizard");

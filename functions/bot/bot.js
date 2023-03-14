@@ -14,16 +14,30 @@ const startAction = require("./actions/start");
 const superWizard = new Scenes.WizardScene(
   "super-wizard",
   (ctx) => {
-    ctx.reply("What's your name?");
+    ctx.reply(
+      `Welcome! Thank you for joining LondonTechCoffee.\nBefore we match you with someone for a random coffee in our weekly pairings, could you please answer a few quick questions:\n`
+    );
+    ctx.reply("What is your name?");
     return ctx.wizard.next();
   },
   (ctx) => {
     ctx.wizard.state.name = ctx.message.text;
-    ctx.reply("Enter your phone number");
+    ctx.reply("What is your occupation?");
     return ctx.wizard.next();
   },
   (ctx) => {
     ctx.wizard.state.occupation = ctx.message.text;
+    ctx.reply("What is your instagram username?");
+    return ctx.wizard.next();
+  },
+  (ctx) => {
+    ctx.wizard.state.instagram = ctx.message.text;
+    ctx.reply("What is your linkedin profile link?");
+    return ctx.wizard.next();
+  },
+  (ctx) => {
+    ctx.wizard.state.linkedin = ctx.message.text;
+    ctx.reply("Thank you!");
     ctx.reply(`Your name is ${ctx.wizard.state.name}`);
     ctx.reply(`Your occupation is ${ctx.wizard.state.occupation}`);
     ctx.reply(
