@@ -28,9 +28,8 @@ module.exports = async (ctx) => {
         `Welcome! Thank you for joining LondonTechCoffee.\nBefore we match you with someone for a random coffee in our weekly pairings, could you please answer a few quick questions:`
       );
 
-      ctx.answerCbQuery();
       //   let name = await
-      ctx.reply("What is your name?");
+      ctx.scene.enter("super-wizard");
       //   let occupation = await ctx.reply("What is your occupation?");
       //   console.log(name);
       //   console.log(occupation);

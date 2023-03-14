@@ -1,4 +1,7 @@
 const { Telegraf } = require("telegraf");
+const session = require("telegraf/session");
+const Stage = require("telegraf/stage");
+const WizardScene = require("telegraf/scenes/wizard");
 
 // import TelegrafQuestion from "telegraf-question";
 const startAction = require("./actions/start");
@@ -9,6 +12,30 @@ const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN);
 //     cancelTimeout: 300000, // 5 min
 //   })
 // );
+
+const superWizard = new WizardScene(
+  "super-wizard",
+  (ctx) => {
+    ctx.reply("What's your name?");
+    ctx.wizard.state.data = {};
+    return ctx.wizard.next();
+  },
+  (ctx) => {
+    ctx.wizard.state.data.name = ctx.message.text;
+    ctx.reply("Enter your phone number");
+    return ctx.wizard.next();
+  },
+  (ctx) => {
+    ctx.wizard.state.data.phone = ctx.message.text;
+    ctx.reply(`Your name is ${ctx.wizard.state.data.name}`);
+    ctx.reply(`Your phone is ${ctx.wizard.state.data.phone}`);
+    return ctx.scene.leave();
+  }
+);
+const stage = new Stage([superWizard], { default: "super-wizard" });
+
+bot.use(session());
+bot.use(stage.middleware());
 
 bot.start((ctx) => {
   return startAction(ctx);
