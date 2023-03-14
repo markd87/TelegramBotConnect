@@ -57,11 +57,11 @@ bot.command("pause", require("./actions/pause"));
 bot.command("resume", require("./actions/resume"));
 bot.command("remove", require("./actions/remove"));
 
-bot.command("/next", (ctx) => {
+bot.action("next", (ctx) => {
   return ctx.scene.enter("super-wizard");
 });
 
-bot.action("/cancel", (ctx) => {
+bot.action("cancel", (ctx) => {
   return ctx.reply("No problem");
 });
 
