@@ -1,4 +1,4 @@
-const { newUser } = require("../components/fauna");
+const { newUser, checkNewUser } = require("../components/fauna");
 const { getUser } = require("../components/helper");
 
 module.exports = async (ctx) => {
@@ -9,7 +9,10 @@ module.exports = async (ctx) => {
   }
 
   try {
-    let isNewUser = await newUser(id, name, username);
+    // let isNewUser = await newUser(id, name, username);
+
+    let isNewUser = await checkNewUser(id);
+
     console.log(isNewUser);
     if (isNewUser) {
       //   ctx.telegram.sendMessage(
@@ -21,8 +24,35 @@ module.exports = async (ctx) => {
       //     (text =
       //       "This week you are meeting @Massiania! say Hi to Mark and schedule your meeting :)")
       //   );
+      ctx.reply(
+        `Welcome! Thank you for joining LondonTechCoffee.
+        Before we match you with someone for a random coffee in our weekly pairings, could you please answer a few quick questions:`
+      );
+
+      let ask = false;
+      let name;
+      //   let occupation;
+      ctx.on("text", (ctx) => {
+        if (ask) {
+          name = ctx.message.text;
+        } else {
+          ask = true;
+          ctx.reply("What is your name?");
+        }
+      });
+      //   ask = false;
+      //   ctx.on("text", (ctx) => {
+      //     if (ask) {
+      //       occupation = ctx.message.text;
+      //     } else {
+      //       ask = true;
+      //       ctx.reply("What is your occupation?");
+      //     }
+      //   });
+      console.log(name);
+      //   console.log(occupation);
       return ctx.reply(
-        `Thank you for joining LondonTechCoffee! You have been added to our weekly pairings list, and we'll be in touch soon with details on your coffee match.`
+        `You have been added to our weekly pairings list, and we'll be in touch soon with details on your coffee match.`
       );
     } else {
       return ctx.reply(
