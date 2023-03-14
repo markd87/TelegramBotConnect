@@ -1,5 +1,5 @@
-const Telegraf = require("telegraf");
-const session = require("telegraf/session");
+const { Telegraf, session } = require("telegraf");
+
 const Stage = require("telegraf/stage");
 const WizardScene = require("telegraf/scenes/wizard");
 
