@@ -1,7 +1,6 @@
-const { Telegraf, session } = require("telegraf");
+const { Telegraf, session, Stage, Scenes } = require("telegraf");
 
-const Stage = require("telegraf/stage");
-const WizardScene = require("telegraf/scenes/wizard");
+// const WizardScene = require("telegraf/scenes/wizard");
 
 // import TelegrafQuestion from "telegraf-question";
 const startAction = require("./actions/start");
@@ -12,7 +11,7 @@ const startAction = require("./actions/start");
 //   })
 // );
 
-const superWizard = new WizardScene(
+const superWizard = new Scenes.WizardScene(
   "super-wizard",
   (ctx) => {
     ctx.reply("What's your name?");
