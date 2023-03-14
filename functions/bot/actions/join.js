@@ -33,8 +33,8 @@ module.exports = async (ctx) => {
         "To start click next bellow:",
         Markup.inlineKeyboard([
           [
-            Markup.callbackButton("Next", "next"),
-            Markup.callbackButton("Cancel", "cancel"),
+            Markup.button.callback("Next", "next"),
+            Markup.button.callback("Cancel", "cancel"),
           ],
         ])
       );
