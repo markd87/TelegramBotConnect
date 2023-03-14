@@ -25,8 +25,7 @@ module.exports = async (ctx) => {
       //       "This week you are meeting @Massiania! say Hi to Mark and schedule your meeting :)")
       //   );
       ctx.reply(
-        `Welcome! Thank you for joining LondonTechCoffee.
-        Before we match you with someone for a random coffee in our weekly pairings, could you please answer a few quick questions:`
+        `Welcome! Thank you for joining LondonTechCoffee.\nBefore we match you with someone for a random coffee in our weekly pairings, could you please answer a few quick questions:`
       );
 
       let ask = false;
@@ -60,7 +59,7 @@ module.exports = async (ctx) => {
       );
     }
   } catch (e) {
-    console.log(err);
+    console.log(e);
     return ctx.reply(`Error occurred`);
   }
 };
