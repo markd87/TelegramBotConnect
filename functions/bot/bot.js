@@ -102,6 +102,7 @@ bot.action("next", (ctx) => {
 });
 
 bot.action("cancel", (ctx) => {
+  ctx.wizard.leave();
   return ctx.reply(
     "No problem! if you change your mind and want to participate, feel free to message /join again"
   );
