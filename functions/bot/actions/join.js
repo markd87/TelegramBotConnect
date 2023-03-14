@@ -29,7 +29,7 @@ module.exports = async (ctx) => {
       );
 
       //   let name = await
-      ctx.scene.enter("super-wizard");
+      await ctx.scene.enter("super-wizard");
       //   let occupation = await ctx.reply("What is your occupation?");
       //   console.log(name);
       //   console.log(occupation);
