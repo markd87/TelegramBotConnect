@@ -1,4 +1,4 @@
-const { Telegraf, session, Stage, Scenes } = require("telegraf");
+const { Telegraf, session, Scenes } = require("telegraf");
 
 // const WizardScene = require("telegraf/scenes/wizard");
 
@@ -30,7 +30,7 @@ const superWizard = new Scenes.WizardScene(
     return ctx.scene.leave();
   }
 );
-const stage = new Stage([superWizard]);
+const stage = new Scenes.Stage([superWizard]);
 
 const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN);
 bot.use(session());
