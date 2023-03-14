@@ -26,10 +26,10 @@ module.exports = async (ctx) => {
       //   );
 
       await ctx.reply(
-        "Welcome! Thank you for joining LondonTechCoffee.\nBefore we match you with someone for a random coffee in our weekly pairings, could you please answer a few quick questions.\n\nTo start please click next bellow",
+        "Welcome! Thank you for joining LondonTechCoffee.\nBefore we match you with someone for a random coffee in our weekly pairings, could you please answer a few quick questions.\n\nTo start please click start bellow",
         Markup.inlineKeyboard([
           [
-            Markup.button.callback("Next", "next"),
+            Markup.button.callback("Start", "next"),
             Markup.button.callback("Cancel", "cancelstart"),
           ],
         ])
