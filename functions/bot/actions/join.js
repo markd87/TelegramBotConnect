@@ -14,7 +14,6 @@ module.exports = async (ctx) => {
 
     let isNewUser = await checkNewUser(id);
 
-    console.log(isNewUser);
     if (isNewUser) {
       //   ctx.telegram.sendMessage(
       //     (chat_id = 396532677),

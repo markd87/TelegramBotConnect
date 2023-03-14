@@ -24,9 +24,10 @@ const superWizard = new Scenes.WizardScene(
     return ctx.wizard.next();
   },
   (ctx) => {
-    console.log(ctx);
-
     if (ctx.update.callback_query.data == "cancel") {
+      ctx.reply(
+        "No problem! if you change your mind and want to participate, feel free to message /join again"
+      );
       return ctx.scene.leave();
     }
     if (ctx.update.callback_query.data == "skip") {
@@ -46,6 +47,9 @@ const superWizard = new Scenes.WizardScene(
   },
   (ctx) => {
     if (ctx.update.callback_query.data == "cancel") {
+      ctx.reply(
+        "No problem! if you change your mind and want to participate, feel free to message /join again"
+      );
       return ctx.scene.leave();
     }
     if (ctx.update.callback_query.data == "skip") {
@@ -66,6 +70,9 @@ const superWizard = new Scenes.WizardScene(
   },
   (ctx) => {
     if (ctx.update.callback_query.data == "cancel") {
+      ctx.reply(
+        "No problem! if you change your mind and want to participate, feel free to message /join again"
+      );
       return ctx.scene.leave();
     }
     if (ctx.update.callback_query.data == "skip") {
@@ -86,6 +93,9 @@ const superWizard = new Scenes.WizardScene(
   },
   async (ctx) => {
     if (ctx.update.callback_query.data == "cancel") {
+      ctx.reply(
+        "No problem! if you change your mind and want to participate, feel free to message /join again"
+      );
       return ctx.scene.leave();
     }
     ctx.scene.session.user.linkedin = ctx.message.text;
