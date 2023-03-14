@@ -101,14 +101,14 @@ bot.action("next", (ctx) => {
   return ctx.scene.enter("super-wizard");
 });
 
-bot.action("cancel_start", (ctx) => {
+bot.action("cancelstart", (ctx) => {
   return ctx.reply(
     "No problem! if you change your mind and want to participate, feel free to message /join again"
   );
 });
 
 bot.action("cancel", (ctx) => {
-  ctx.wizard.leave();
+  ctx.scene.leave();
   return ctx.reply(
     "No problem! if you change your mind and want to participate, feel free to message /join again"
   );
