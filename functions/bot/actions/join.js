@@ -1,4 +1,4 @@
-const { newUser, checkNewUser } = require("../components/fauna");
+const { checkNewUser } = require("../components/fauna");
 const { getUser } = require("../components/helper");
 const { Markup } = require("telegraf");
 

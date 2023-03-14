@@ -1,4 +1,4 @@
-const { Telegraf, session, Scenes } = require("telegraf");
+const { Telegraf, session, Scenes, Markup } = require("telegraf");
 
 const { getUser } = require("./components/helper");
 
@@ -6,12 +6,8 @@ const startAction = require("./actions/start");
 const { newUser } = require("./components/fauna");
 
 const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN);
-// bot.use(
-//   TelegrafQuestion({
-//     cancelTimeout: 300000, // 5 min
-//   })
-// );
 
+// joining questions wizard
 const superWizard = new Scenes.WizardScene(
   "super-wizard",
   (ctx) => {
