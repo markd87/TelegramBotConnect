@@ -24,6 +24,7 @@ const superWizard = new Scenes.WizardScene(
     return ctx.wizard.next();
   },
   (ctx) => {
+    console.log(ctx.update);
     if (ctx.update.callback_query.data == "cancel") {
       ctx.reply(
         "No problem! if you change your mind and want to participate, feel free to message /join again"
@@ -32,7 +33,8 @@ const superWizard = new Scenes.WizardScene(
     }
     if (ctx.update.callback_query.data == "skip") {
       ctx.update.callback_query.data = "next";
-      return ctx.wizard.next();
+
+      return ctx.wizard.steps[ctx.wizard.cursor - 1](ctx);
     }
     ctx.scene.session.user.name = ctx.message.text;
     ctx.reply(
