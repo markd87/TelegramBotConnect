@@ -29,10 +29,11 @@ module.exports = async (ctx) => {
       );
 
       ctx.answerCbQuery();
-      let name = await ctx.ask("What is your name?");
-      let occupation = await ctx.ask("What is your occupation?");
-      console.log(name);
-      console.log(occupation);
+      //   let name = await
+      ctx.reply("What is your name?");
+      //   let occupation = await ctx.reply("What is your occupation?");
+      //   console.log(name);
+      //   console.log(occupation);
 
       //   ask = false;
       //   ctx.on("text", (ctx) => {
@@ -43,7 +44,6 @@ module.exports = async (ctx) => {
       //       ctx.reply("What is your occupation?");
       //     }
       //   });
-      console.log(name);
       //   console.log(occupation);
       return ctx.reply(
         `You have been added to our weekly pairings list, and we'll be in touch soon with details on your coffee match.`

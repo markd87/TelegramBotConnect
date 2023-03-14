@@ -11,7 +11,7 @@
   "dependencies": {
     "netlify-lambda": "^2.0.15",
     "faunadb": "^4.7.1",
-    "telegraf-question": "^1.1.4",
+
     "telegraf": "^4.11.2"
   }
 }
