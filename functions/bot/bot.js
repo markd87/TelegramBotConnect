@@ -11,22 +11,11 @@ const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN);
 const superWizard = new Scenes.WizardScene(
   "super-wizard",
   async (ctx) => {
-    await ctx.reply(
-      `What is your name?`,
-      Markup.inlineKeyboard([Markup.button.callback("Skip", "skip")])
-    );
+    await ctx.reply(`What is your name?`);
     ctx.scene.session.user = {};
     return ctx.wizard.next();
   },
   async (ctx) => {
-    if (ctx.message != undefined) {
-      ctx.scene.session.user.name = ctx.message.text;
-    } else if (ctx.update.callback_query.data == "skip") {
-      ctx.scene.session.user.name = "Not available";
-
-      ctx.update.callback_query.data = "next";
-      return ctx.wizard.steps[ctx.wizard.cursor - 1](ctx);
-    }
     await ctx.reply(
       "What is your occupation?",
       Markup.inlineKeyboard([Markup.button.callback("Skip", "skip")])
