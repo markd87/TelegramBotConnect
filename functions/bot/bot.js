@@ -31,6 +31,7 @@ const superWizard = new Scenes.WizardScene(
       return ctx.scene.leave();
     }
     if (ctx.update.callback_query.data == "skip") {
+      ctx.update.callback_query.data = "next";
       return ctx.wizard.next();
     }
     ctx.scene.session.user.name = ctx.message.text;
@@ -53,6 +54,7 @@ const superWizard = new Scenes.WizardScene(
       return ctx.scene.leave();
     }
     if (ctx.update.callback_query.data == "skip") {
+      ctx.update.callback_query.data = "next";
       return ctx.wizard.next();
     }
 
@@ -76,6 +78,7 @@ const superWizard = new Scenes.WizardScene(
       return ctx.scene.leave();
     }
     if (ctx.update.callback_query.data == "skip") {
+      ctx.update.callback_query.data = "next";
       return ctx.wizard.next();
     }
 
