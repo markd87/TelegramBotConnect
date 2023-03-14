@@ -1,5 +1,6 @@
 const { newUser, checkNewUser } = require("../components/fauna");
 const { getUser } = require("../components/helper");
+const { Markup } = require("telegraf");
 
 module.exports = async (ctx) => {
   const { id, isBot, name, username } = getUser(ctx.from);
