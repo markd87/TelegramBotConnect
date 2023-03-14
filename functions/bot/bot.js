@@ -18,14 +18,14 @@ const superWizard = new Scenes.WizardScene(
     return ctx.wizard.next();
   },
   async (ctx) => {
-    ctx.wizard.state.data.name = ctx.message.text;
+    ctx.wizard.state.name = ctx.message.text;
     await ctx.reply("Enter your phone number");
     return ctx.wizard.next();
   },
   async (ctx) => {
-    ctx.wizard.state.data.phone = ctx.message.text;
-    ctx.reply(`Your name is ${ctx.wizard.state.data.name}`);
-    ctx.reply(`Your phone is ${ctx.wizard.state.data.phone}`);
+    ctx.wizard.state.occupation = ctx.message.text;
+    ctx.reply(`Your name is ${ctx.wizard.state.name}`);
+    ctx.reply(`Your occupation is ${ctx.wizard.state.occupation}`);
     ctx.reply(
       `You have been added to our weekly pairings list, and we'll be in touch soon with details on your coffee match.`
     );
