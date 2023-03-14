@@ -12,42 +12,36 @@ const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN);
 //   })
 // );
 
+Scenes.WizardScene.prototype.enterMiddleware =
+  Scenes.WizardScene.prototype.middleware;
+
 const superWizard = new Scenes.WizardScene(
   "super-wizard",
   async (ctx) => {
-    await ctx.reply(
-      `To continue click next`,
-      Markup.inlineKeyboard([Markup.callbackButton("➡️ Next", "next")]).extra()
-    );
-    return ctx.wizard.next();
-  },
-  async (ctx) => {
-    ctx.scene.session.user = {};
-    await ctx.reply(`What is your name?`);
+    ctx.reply(`What is your name?`);
     ctx.scene.session.user = {};
     return ctx.wizard.next();
   },
-  async (ctx) => {
+  (ctx) => {
     ctx.scene.session.user.name = ctx.message.text;
-    await ctx.reply("What is your occupation?");
+    ctx.reply("What is your occupation?");
     return ctx.wizard.next();
   },
-  async (ctx) => {
+  (ctx) => {
     ctx.scene.session.user.occupation = ctx.message.text;
-    await ctx.reply("What is your instagram username?");
+    ctx.reply("What is your instagram username?");
     return ctx.wizard.next();
   },
-  async (ctx) => {
+  (ctx) => {
     ctx.scene.session.user.instagram = ctx.message.text;
-    await ctx.reply("What is your linkedin profile link?");
+    ctx.reply("What is your linkedin profile link?");
     return ctx.wizard.next();
   },
-  async (ctx) => {
+  (ctx) => {
     ctx.scene.session.user.linkedin = ctx.message.text;
-    await ctx.reply(
+    ctx.reply(
       "Thank you! You have been added to our weekly pairings list, and we'll be in touch soon with details on your coffee match."
     );
-
     return ctx.scene.leave();
   }
 );
