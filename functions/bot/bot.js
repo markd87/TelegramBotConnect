@@ -19,8 +19,8 @@ const superWizard = new Scenes.WizardScene(
     return ctx.wizard.next();
   },
   (ctx) => {
-    console.log(ctx.message.text);
-    if (ctx.message.text) {
+    console.log(ctx.message);
+    if (ctx.message) {
       ctx.scene.session.user.name = ctx.message.text;
     } else if (ctx.update.callback_query.data == "skip") {
       ctx.scene.session.user.name = "Not available";
@@ -35,8 +35,8 @@ const superWizard = new Scenes.WizardScene(
     return ctx.wizard.next();
   },
   (ctx) => {
-    console.log(ctx.message.text);
-    if (ctx.message.text) {
+    console.log(ctx.message);
+    if (ctx.message) {
       ctx.scene.session.user.occupation = ctx.message.text;
     } else if (ctx.update.callback_query.data == "skip") {
       ctx.update.callback_query.data = "next";
@@ -51,7 +51,7 @@ const superWizard = new Scenes.WizardScene(
     return ctx.wizard.next();
   },
   (ctx) => {
-    if (ctx.message.text) {
+    if (ctx.message) {
       ctx.scene.session.user.instagram = ctx.message.text;
     } else if (ctx.update.callback_query.data == "skip") {
       ctx.update.callback_query.data = "next";
@@ -66,7 +66,7 @@ const superWizard = new Scenes.WizardScene(
     return ctx.wizard.next();
   },
   async (ctx) => {
-    if (ctx.message.text) {
+    if (ctx.message) {
       ctx.scene.session.user.linkedin = ctx.message.text;
     } else if (ctx.update.callback_query.data == "skip") {
       ctx.update.callback_query.data = "next";
