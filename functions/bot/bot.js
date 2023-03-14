@@ -19,25 +19,25 @@ const superWizard = new Scenes.WizardScene(
     );
 
     ctx.wizard.next();
-    return ctx.wizard.steps[ctx.wizard.cursor](ctx);
+    return ctx.wizard.step(ctx, next);
   },
   (ctx) => {
     ctx.wizard.state.name = ctx.message.text;
     ctx.reply("What is your occupation?");
     ctx.wizard.next();
-    return ctx.wizard.steps[ctx.wizard.cursor](ctx);
+    return ctx.wizard.step(ctx, next);
   },
   (ctx) => {
     ctx.wizard.state.occupation = ctx.message.text;
     ctx.reply("What is your instagram username?");
     ctx.wizard.next();
-    return ctx.wizard.steps[ctx.wizard.cursor](ctx);
+    return ctx.wizard.step(ctx, next);
   },
   (ctx) => {
     ctx.wizard.state.instagram = ctx.message.text;
     ctx.reply("What is your linkedin profile link?");
     ctx.wizard.next();
-    return ctx.wizard.steps[ctx.wizard.cursor](ctx);
+    return ctx.wizard.step(ctx, next);
   },
   (ctx) => {
     ctx.wizard.state.linkedin = ctx.message.text;
