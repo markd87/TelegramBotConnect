@@ -12,13 +12,21 @@ const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN);
 //   })
 // );
 
-export const superWizard = new Scenes.WizardScene(
+const superWizard = new Scenes.WizardScene(
   "super-wizard",
-  // (ctx) => {
-  //   ctx.reply(`What is your name?`);
-  //   ctx.scene.session.user = {};
-  //   return ctx.wizard.next();
-  // },
+  (ctx) => {
+    ctx.reply(
+      `To continue click next`,
+      Markup.inlineKeyboard([Markup.callbackButton("➡️ Next", "next")]).extra()
+    );
+    return ctx.wizard.next();
+  },
+  (ctx) => {
+    ctx.scene.session.user = {};
+    ctx.reply(`What is your name?`);
+    ctx.scene.session.user = {};
+    return ctx.wizard.next();
+  },
   (ctx) => {
     ctx.scene.session.user.name = ctx.message.text;
     ctx.reply("What is your occupation?");
