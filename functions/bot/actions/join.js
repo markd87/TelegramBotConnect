@@ -26,9 +26,11 @@ module.exports = async (ctx) => {
       //       "This week you are meeting @Massiania! say Hi to Mark and schedule your meeting :)")
       //   );
 
+      ctx.reply(
+        `Welcome! Thank you for joining LondonTechCoffee.\nBefore we match you with someone for a random coffee in our weekly pairings, could you please answer a few quick questions.`
+      );
       await ctx.reply(
-        `Welcome! Thank you for joining LondonTechCoffee.\nBefore we match you with someone for a random coffee in our weekly pairings, could you please answer a few quick questions.\n
-        To start click next bellow"`,
+        "To start click next bellow",
         Markup.inlineKeyboard([
           [
             Markup.button.callback("Next", "next"),
