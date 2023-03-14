@@ -26,6 +26,9 @@ const superWizard = new Scenes.WizardScene(
     ctx.wizard.state.data.phone = ctx.message.text;
     ctx.reply(`Your name is ${ctx.wizard.state.data.name}`);
     ctx.reply(`Your phone is ${ctx.wizard.state.data.phone}`);
+    ctx.reply(
+      `You have been added to our weekly pairings list, and we'll be in touch soon with details on your coffee match.`
+    );
     return ctx.scene.leave();
   }
 );
