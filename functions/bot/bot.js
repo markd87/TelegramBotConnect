@@ -13,16 +13,16 @@ const startAction = require("./actions/start");
 
 const superWizard = new Scenes.WizardScene(
   "super-wizard",
-  async (ctx) => {
-    await ctx.reply("What's your name?");
+  (ctx) => {
+    ctx.reply("What's your name?");
     return ctx.wizard.next();
   },
-  async (ctx) => {
+  (ctx) => {
     ctx.wizard.state.name = ctx.message.text;
-    await ctx.reply("Enter your phone number");
+    ctx.reply("Enter your phone number");
     return ctx.wizard.next();
   },
-  async (ctx) => {
+  (ctx) => {
     ctx.wizard.state.occupation = ctx.message.text;
     ctx.reply(`Your name is ${ctx.wizard.state.name}`);
     ctx.reply(`Your occupation is ${ctx.wizard.state.occupation}`);
