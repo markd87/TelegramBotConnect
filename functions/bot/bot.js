@@ -10,15 +10,15 @@ const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN);
 // joining questions wizard
 const superWizard = new Scenes.WizardScene(
   "super-wizard",
-  (ctx) => {
-    ctx.reply(
+  async (ctx) => {
+    await ctx.reply(
       `What is your name?`,
       Markup.inlineKeyboard([Markup.button.callback("Skip", "skip")])
     );
     ctx.scene.session.user = {};
     return ctx.wizard.next();
   },
-  (ctx) => {
+  async (ctx) => {
     if (ctx.message != undefined) {
       ctx.scene.session.user.name = ctx.message.text;
     } else if (ctx.update.callback_query.data == "skip") {
@@ -27,13 +27,13 @@ const superWizard = new Scenes.WizardScene(
       ctx.update.callback_query.data = "next";
       return ctx.wizard.steps[ctx.wizard.cursor - 1](ctx);
     }
-    ctx.reply(
+    await ctx.reply(
       "What is your occupation?",
       Markup.inlineKeyboard([Markup.button.callback("Skip", "skip")])
     );
     return ctx.wizard.next();
   },
-  (ctx) => {
+  async (ctx) => {
     if (ctx.message != undefined) {
       ctx.scene.session.user.occupation = ctx.message.text;
     } else if (ctx.update.callback_query.data == "skip") {
@@ -42,13 +42,13 @@ const superWizard = new Scenes.WizardScene(
       return ctx.wizard.steps[ctx.wizard.cursor - 1](ctx);
     }
 
-    ctx.reply(
+    await ctx.reply(
       "What is your Instagram username?",
       Markup.inlineKeyboard([Markup.button.callback("Skip", "skip")])
     );
     return ctx.wizard.next();
   },
-  (ctx) => {
+  async (ctx) => {
     if (ctx.message != undefined) {
       ctx.scene.session.user.instagram = ctx.message.text;
     } else if (ctx.update.callback_query.data == "skip") {
@@ -57,7 +57,7 @@ const superWizard = new Scenes.WizardScene(
       return ctx.wizard.steps[ctx.wizard.cursor - 1](ctx);
     }
 
-    ctx.reply(
+    await ctx.reply(
       "What is your linkedin profile link?",
       Markup.inlineKeyboard([Markup.button.callback("Skip", "skip")])
     );
