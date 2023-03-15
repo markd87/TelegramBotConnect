@@ -16,6 +16,7 @@ const superWizard = new Scenes.WizardScene(
     return ctx.wizard.next();
   },
   async (ctx) => {
+    ctx.scene.session.user.name = ctx.message.text;
     await ctx.reply(
       "What is your occupation?",
       Markup.inlineKeyboard([Markup.button.callback("Skip", "skip")])
