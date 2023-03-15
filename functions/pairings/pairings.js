@@ -22,6 +22,10 @@ async function get_all_participants() {
       q.Lambda("user", {
         userId: q.Select(["data", "userId"], q.Get(q.Var("user"))),
         username: q.Select(["data", "username"], q.Get(q.Var("user"))),
+        name: q.Select(["data", "name"], q.Get(q.Var("user"))),
+        occupation: q.Select(["data", "name"], q.Get(q.Var("occupation"))),
+        instagram: q.Select(["data", "instagram"], q.Get(q.Var("user"))),
+        linkedin: q.Select(["data", "linkedin"], q.Get(q.Var("user"))),
       })
     )
   );
@@ -48,7 +52,7 @@ async function store_new_pairs(pairs) {
 }
 
 function match_message(name, occupation, instagram, linkedin) {
-  return `Name: ${name} <br/> Occupation: ${occupation} <br/> Instagram: [${instagram}](https://www.instagram.com/${instagram}/) <br/> LinkedIn : [${linkedin}](${linkedin})`;
+  return `Name: ${name}\nOccupation: ${occupation}\nInstagram: https://www.instagram.com/${instagram}/\nLinkedIn: ${linkedin}`;
 }
 
 exports.handler = async function (event, context) {
@@ -158,9 +162,8 @@ exports.handler = async function (event, context) {
               pairs[i][2].instagram,
               pairs[i][2].linkedin
             ) +
-            `\nWe hope you have a great time getting to know each other over a cup of coffee.
-            \nFeel free to coordinate a time and location that works for both of you. Enjoy!`),
-          (parse_mode = "markdown")
+            `\nFeel free to coordinate a time and location that works for both of you. Enjoy!`),
+          { parse_mode: "markdown" }
         );
         await bot.telegram.sendMessage(
           (chat_id = user_2),
@@ -179,9 +182,8 @@ exports.handler = async function (event, context) {
               pairs[i][2].instagram,
               pairs[i][2].linkedin
             ) +
-            `\nWe hope you have a great time getting to know each other over a cup of coffee.
-            \nFeel free to coordinate a time and location that works for both of you. Enjoy!`),
-          (parse_mode = "markdown")
+            `\nFeel free to coordinate a time and location that works for both of you. Enjoy!`),
+          { parse_mode: "markdown" }
         );
         await bot.telegram.sendMessage(
           (chat_id = user_3),
@@ -200,9 +202,8 @@ exports.handler = async function (event, context) {
               pairs[i][1].instagram,
               pairs[i][1].linkedin
             ) +
-            `\nWe hope you have a great time getting to know each other over a cup of coffee.
-            \nFeel free to coordinate a time and location that works for both of you. Enjoy!`),
-          (parse_mode = "markdown")
+            `\nFeel free to coordinate a time and location that works for both of you. Enjoy!`),
+          { parse_mode: "markdown" }
         );
       } else {
         await bot.telegram.sendMessage(
@@ -215,9 +216,8 @@ exports.handler = async function (event, context) {
               pairs[i][1].instagram,
               pairs[i][1].linkedin
             ) +
-            `\nWe hope you both have a great time getting to know each other over a cup of coffee. 
-            \nFeel free to coordinate a time and location that works for both of you. Enjoy!`),
-          (parse_mode = "markdown")
+            `\nFeel free to coordinate a time and location that works for both of you. Enjoy!`),
+          { parse_mode: "markdown" }
         );
         await bot.telegram.sendMessage(
           (chat_id = user_2),
@@ -229,9 +229,8 @@ exports.handler = async function (event, context) {
               pairs[i][0].instagram,
               pairs[i][0].linkedin
             ) +
-            `\nWe hope you both have a great time getting to know each other over a cup of coffee. 
-            \nFeel free to coordinate a time and location that works for both of you. Enjoy!`),
-          (parse_mode = "markdown")
+            `\nFeel free to coordinate a time and location that works for both of you. Enjoy!`),
+          { parse_mode: "markdown" }
         );
       }
     }
