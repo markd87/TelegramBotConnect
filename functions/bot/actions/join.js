@@ -10,8 +10,6 @@ module.exports = async (ctx) => {
   }
 
   try {
-    // let isNewUser = await newUser(id, name, username);
-
     let isNewUser = await checkNewUser(id);
 
     if (isNewUser) {
@@ -34,24 +32,6 @@ module.exports = async (ctx) => {
           ],
         ])
       );
-
-      //   let name = await
-      //   ctx.scene.enter("super-wizard");
-
-      //   let occupation = await ctx.reply("What is your occupation?");
-      //   console.log(name);
-      //   console.log(occupation);
-
-      //   ask = false;
-      //   ctx.on("text", (ctx) => {
-      //     if (ask) {
-      //       occupation = ctx.message.text;
-      //     } else {
-      //       ask = true;
-      //       ctx.reply("What is your occupation?");
-      //     }
-      //   });
-      //   console.log(occupation);
     } else {
       return ctx.reply(
         `It looks like you're already on our weekly pairings list! We're so glad to have you as part of our community, and we hope you're enjoying meeting new people through LondonTechConnect.\nIf you need to pause the pairings for any reason, use the /pause command. \nIf you want to start receiving pairings again, use the /resume command.\nAnd If you'd like to remove yourself from the pairings, type /remove.`

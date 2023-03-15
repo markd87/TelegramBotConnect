@@ -30,10 +30,10 @@ module.exports = async (ctx) => {
   ctx.reply(
     `Welcome to LondonTechCoffee 👋 🇺🇦 🇬🇧 , the bot that helps you meet new people over a cup of coffee!
     \nWhether you're new to London or just looking to expand your network, our bot will match you with a random person in the chat for a friendly chat and a hot drink ☕. 
-    \n\nTo join our weekly pairings, simply type /join in the chat. 
-    \nIf you need to pause the pairings for any reason, use the /pause command. 
-    \nIf you want to start receiving pairings again, use the /resume command. 
-    \nAnd If you'd like to remove yourself from the pairings, type /remove. 
+    \n\nTo join our weekly pairings, type /join in the chat.
+    \nIf you need to pause the pairings for any reason, use the /pause command.
+    \nIf you want to start receiving pairings again, use the /resume command.
+    \nAnd If you'd like to remove yourself from the pairings, type /remove.
     
     \nRemember, meeting new people can be a great way to learn new things, expand your horizons, and have fun! \nSo don't be shy, join LondonTechConnect today and start connecting with your fellow Londoners.`
   );

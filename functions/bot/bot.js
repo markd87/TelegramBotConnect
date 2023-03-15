@@ -27,7 +27,7 @@ const superWizard = new Scenes.WizardScene(
       ctx.scene.session.user.occupation = ctx.message.text;
     } else if (ctx.update.callback_query.data == "skip") {
       ctx.update.callback_query.data = "next";
-      ctx.scene.session.user.occupation = "Not available";
+      ctx.scene.session.user.occupation = "";
       return ctx.wizard.steps[ctx.wizard.cursor](ctx);
     }
 
@@ -42,7 +42,7 @@ const superWizard = new Scenes.WizardScene(
       ctx.scene.session.user.instagram = ctx.message.text;
     } else if (ctx.update.callback_query.data == "skip") {
       ctx.update.callback_query.data = "next";
-      ctx.scene.session.user.instagram = "Not available";
+      ctx.scene.session.user.instagram = "";
       return ctx.wizard.steps[ctx.wizard.cursor](ctx);
     }
 
@@ -57,7 +57,7 @@ const superWizard = new Scenes.WizardScene(
       ctx.scene.session.user.linkedin = ctx.message.text;
     } else if (ctx.update.callback_query.data == "skip") {
       ctx.update.callback_query.data = "next";
-      ctx.scene.session.user.linkedin = "Not available";
+      ctx.scene.session.user.linkedin = "";
     }
 
     const { id, t_name, isbot, username } = getUser(ctx.from);
