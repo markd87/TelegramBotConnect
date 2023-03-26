@@ -58,6 +58,9 @@ function match_message(name, occupation, instagram, linkedin) {
 exports.handler = async function (event, context) {
   console.log("Received event:", event);
 
+  // current date as string
+  let current_date = new Date().toJSON().slice(0, 10);
+
   let all_participants = await get_all_participants();
   all_participants = all_participants["data"];
 
@@ -75,7 +78,7 @@ exports.handler = async function (event, context) {
   }
 
   let trials = 0;
-  const MAX_TRIALS = 1000;
+  const MAX_TRIALS = 2000;
   let stop = false;
 
   // paired usernames
@@ -85,6 +88,7 @@ exports.handler = async function (event, context) {
 
   while (pairs.length != all_participants.length / 2 && stop != true) {
     pairs = [];
+    pairs_to_store = [];
     trials += 1;
 
     shuffleArray(all_participants);
@@ -103,7 +107,14 @@ exports.handler = async function (event, context) {
         break;
       } else {
         pairs.push([home[m], away[m]]);
-        pairs_to_store.push({ pair: `${home[m].userId}_${away[m].userId}` });
+        pairs_to_store.push({
+          date: current_date,          
+          pair: `${home[m].userId}_${away[m].userId}`,
+          name_1: home[m].name,
+          name_2: away[m].name,
+          username_1: home[m].username,
+          username_2: away[m].username,
+        });
       }
     }
     if (trials == MAX_TRIALS) {
@@ -127,8 +138,22 @@ exports.handler = async function (event, context) {
           pairs.push([pair[0], pair[1], last]);
 
           // update pairs to store
-          pairs_to_store.push({ pair: `${pair[0].userId}_${last.userId}` });
-          pairs_to_store.push({ pair: `${pair[1].userId}_${last.userId}` });
+          pairs_to_store.push({
+            date: current_date,            
+            pair: `${pair[0].userId}_${last.userId}`,
+            name_1: pair[0].name,
+            name_2: last.name,
+            username_1: pair[0].username,
+            username_2: last.username,
+          });
+          pairs_to_store.push({
+            date: current_date,
+            pair: `${pair[1].userId}_${last.userId}`,
+            name_1: pair[1].name,
+            name_2: last.name,
+            username_1: pair[1].username,
+            username_2: last.username,
+          });
           break;
         }
       }
@@ -148,7 +173,7 @@ exports.handler = async function (event, context) {
         await bot.telegram.sendMessage(
           (chat_id = user_1),
           (text =
-            `Hello! as there was an odd number of participants, you've been randomly matched with @${pairs[i][1].username} and @${pairs[i][2].username} for a coffee meetup.\nHere are some details about them:\n\n` +
+            `Hello! as there was an odd number of participants, you've been randomly matched with @${pairs[i][1].username} and @${pairs[i][2].username} for a coffee ☕.\nHere are some details about them:\n\n` +
             match_message(
               pairs[i][1].name,
               pairs[i][1].occupation,
@@ -167,7 +192,7 @@ exports.handler = async function (event, context) {
         await bot.telegram.sendMessage(
           (chat_id = user_2),
           (text =
-            `Hello! as there was an odd number of participants, you've been randomly matched with @${pairs[i][0].username} and @${pairs[i][2].username} for a coffee meetup.\nHere are some details about them:\n\n` +
+            `Hello! as there was an odd number of participants, you've been randomly matched with @${pairs[i][0].username} and @${pairs[i][2].username} for a coffee ☕.\nHere are some details about them:\n\n` +
             match_message(
               pairs[i][0].name,
               pairs[i][0].occupation,
@@ -186,7 +211,7 @@ exports.handler = async function (event, context) {
         await bot.telegram.sendMessage(
           (chat_id = user_3),
           (text =
-            `Hello! as there was an odd number of participants, you've been randomly matched with @${pairs[i][0].username} and @${pairs[i][1].username} for a coffee meetup.\nHere are some details about them:\n\n` +
+            `Hello! as there was an odd number of participants, you've been randomly matched with @${pairs[i][0].username} and @${pairs[i][1].username} for a coffee ☕.\nHere are some details about them:\n\n` +
             match_message(
               pairs[i][0].name,
               pairs[i][0].occupation,
@@ -206,7 +231,7 @@ exports.handler = async function (event, context) {
         await bot.telegram.sendMessage(
           (chat_id = user_1),
           (text =
-            `Hello! You've been randomly matched with @${pairs[i][1].username} for a coffee meetup.\nHere are some details about them:\n\n` +
+            `Hello! You've been randomly matched with @${pairs[i][1].username} for a coffee ☕.\nHere are some details about them:\n\n` +
             match_message(
               pairs[i][1].name,
               pairs[i][1].occupation,
@@ -218,7 +243,7 @@ exports.handler = async function (event, context) {
         await bot.telegram.sendMessage(
           (chat_id = user_2),
           (text =
-            `Hello! You've been randomly matched with @${pairs[i][0].username} for a coffee meetup.\nHere are some details about them:\n\n` +
+            `Hello! You've been randomly matched with @${pairs[i][0].username} for a coffee ☕.\nHere are some details about them:\n\n` +
             match_message(
               pairs[i][0].name,
               pairs[i][0].occupation,
