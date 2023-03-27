@@ -34,7 +34,8 @@ module.exports = async (ctx) => {
     \nIf you need to pause the pairings for any reason, use the /pause command.
     \nIf you want to start receiving pairings again, use the /resume command.
     \nAnd If you'd like to remove yourself from the pairings, type /remove.
+    \nTo get a reminder of the available options, type /help.
     
-    \nRemember, meeting new people can be a great way to learn new things, expand your horizons, and have fun! \nSo don't be shy, join LondonTechConnect today and start connecting with your fellow Londoners.`
+    \nRemember, meeting new people can be a great way to learn new things, expand your horizons, and have fun! \nSo don't be shy, join LondonTechCoffee today and start connecting with your fellow Londoners.`
   );
 };
