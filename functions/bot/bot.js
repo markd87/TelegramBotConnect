@@ -93,6 +93,7 @@ bot.command("join", require("./actions/join"));
 bot.command("pause", require("./actions/pause"));
 bot.command("resume", require("./actions/resume"));
 bot.command("remove", require("./actions/remove"));
+bot.command("help", require("./actions/help"));
 
 bot.action("next", (ctx) => {
   return ctx.scene.enter("super-wizard");
