@@ -28,7 +28,7 @@ exports.newUser = (id, name, username, occupation, instagram, linkedin) => {
             userId: id,
             participate: true,
             name: name,
-            username: username,
+            username: username || name,
             occupation: occupation,
             instagram: instagram,
             linkedin: linkedin,
