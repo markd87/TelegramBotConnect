@@ -33,7 +33,7 @@ const superWizard = new Scenes.WizardScene(
     }
 
     await ctx.reply(
-      "What is your Instagram username?",
+      "What is your Instagram username (please only provide the username)?",
       Markup.inlineKeyboard([Markup.button.callback("Skip", "skip")])
     );
     return ctx.wizard.next();
@@ -48,7 +48,7 @@ const superWizard = new Scenes.WizardScene(
     }
 
     await ctx.reply(
-      "What is your linkedin profile link?",
+      "What is your linkedin profile link (please provide a full link)?",
       Markup.inlineKeyboard([Markup.button.callback("Skip", "skip")])
     );
     return ctx.wizard.next();
@@ -93,6 +93,7 @@ bot.command("join", require("./actions/join"));
 bot.command("pause", require("./actions/pause"));
 bot.command("resume", require("./actions/resume"));
 bot.command("remove", require("./actions/remove"));
+bot.command("help", require("./actions/help"));
 
 bot.action("next", (ctx) => {
   return ctx.scene.enter("super-wizard");
