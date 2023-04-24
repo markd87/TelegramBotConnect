@@ -18,7 +18,7 @@ function shuffleArray(array) {
 async function get_all_participants() {
   return await client.query(
     q.Map(
-      q.Paginate(q.Match(q.Index("participants"), true)),
+      q.Paginate(q.Match(q.Index("participants"), true), { size: 200 }),
       q.Lambda("user", {
         userId: q.Select(["data", "userId"], q.Get(q.Var("user"))),
         username: q.Select(["data", "username"], q.Get(q.Var("user"))),
@@ -34,7 +34,7 @@ async function get_all_participants() {
 async function get_previous_pairs() {
   return await client.query(
     q.Map(
-      q.Paginate(q.Documents(q.Collection("pairs"))),
+      q.Paginate(q.Documents(q.Collection("pairs")), { size: 1000 }),
       q.Lambda("pair", {
         pair: q.Select(["data", "pair"], q.Get(q.Var("pair"))),
       })
