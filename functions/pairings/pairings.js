@@ -173,115 +173,105 @@ exports.handler = async function (event, context) {
         let user_3 = parseInt(pairs[i][2].userId);
 
         try {
-          await bot.telegram
-            .sendMessage(
-              (chat_id = user_1),
-              (text =
-                `Hello! as there was an odd number of participants, you've been randomly matched with @${pairs[i][1].username} and @${pairs[i][2].username} for a coffee ☕.\nHere are some details about them:\n\n` +
-                match_message(
-                  pairs[i][1].name,
-                  pairs[i][1].occupation,
-                  pairs[i][1].instagram,
-                  pairs[i][1].linkedin
-                ) +
-                " and " +
-                match_message(
-                  pairs[i][2].name,
-                  pairs[i][2].occupation,
-                  pairs[i][2].instagram,
-                  pairs[i][2].linkedin
-                ) +
-                `\n\nFeel free to coordinate a time and location that works for both of you. Enjoy!`)
-            )
-            .catch((err) => console.log(err));
+          await bot.telegram.sendMessage(
+            (chat_id = user_1),
+            (text =
+              `Hello! as there was an odd number of participants, you've been randomly matched with @${pairs[i][1].username} and @${pairs[i][2].username} for a coffee ☕.\nHere are some details about them:\n\n` +
+              match_message(
+                pairs[i][1].name,
+                pairs[i][1].occupation,
+                pairs[i][1].instagram,
+                pairs[i][1].linkedin
+              ) +
+              " and " +
+              match_message(
+                pairs[i][2].name,
+                pairs[i][2].occupation,
+                pairs[i][2].instagram,
+                pairs[i][2].linkedin
+              ) +
+              `\n\nFeel free to coordinate a time and location that works for both of you. Enjoy!`)
+          );
         } catch (error) {
           console.log(error);
         }
         try {
-          await bot.telegram
-            .sendMessage(
-              (chat_id = user_2),
-              (text =
-                `Hello! as there was an odd number of participants, you've been randomly matched with @${pairs[i][0].username} and @${pairs[i][2].username} for a coffee ☕.\nHere are some details about them:\n\n` +
-                match_message(
-                  pairs[i][0].name,
-                  pairs[i][0].occupation,
-                  pairs[i][0].instagram,
-                  pairs[i][0].linkedin
-                ) +
-                " and " +
-                match_message(
-                  pairs[i][2].name,
-                  pairs[i][2].occupation,
-                  pairs[i][2].instagram,
-                  pairs[i][2].linkedin
-                ) +
-                `\n\nFeel free to coordinate a time and location that works for both of you. Enjoy!`)
-            )
-            .catch((err) => console.log(err));
+          await bot.telegram.sendMessage(
+            (chat_id = user_2),
+            (text =
+              `Hello! as there was an odd number of participants, you've been randomly matched with @${pairs[i][0].username} and @${pairs[i][2].username} for a coffee ☕.\nHere are some details about them:\n\n` +
+              match_message(
+                pairs[i][0].name,
+                pairs[i][0].occupation,
+                pairs[i][0].instagram,
+                pairs[i][0].linkedin
+              ) +
+              " and " +
+              match_message(
+                pairs[i][2].name,
+                pairs[i][2].occupation,
+                pairs[i][2].instagram,
+                pairs[i][2].linkedin
+              ) +
+              `\n\nFeel free to coordinate a time and location that works for both of you. Enjoy!`)
+          );
         } catch (error) {
           console.log(error);
         }
 
         try {
-          await bot.telegram
-            .sendMessage(
-              (chat_id = user_3),
-              (text =
-                `Hello! as there was an odd number of participants, you've been randomly matched with @${pairs[i][0].username} and @${pairs[i][1].username} for a coffee ☕.\nHere are some details about them:\n\n` +
-                match_message(
-                  pairs[i][0].name,
-                  pairs[i][0].occupation,
-                  pairs[i][0].instagram,
-                  pairs[i][0].linkedin
-                ) +
-                " and " +
-                match_message(
-                  pairs[i][1].name,
-                  pairs[i][1].occupation,
-                  pairs[i][1].instagram,
-                  pairs[i][1].linkedin
-                ) +
-                `\n\nFeel free to coordinate a time and location that works for both of you. Enjoy!`)
-            )
-            .catch((err) => console.log(err));
+          await bot.telegram.sendMessage(
+            (chat_id = user_3),
+            (text =
+              `Hello! as there was an odd number of participants, you've been randomly matched with @${pairs[i][0].username} and @${pairs[i][1].username} for a coffee ☕.\nHere are some details about them:\n\n` +
+              match_message(
+                pairs[i][0].name,
+                pairs[i][0].occupation,
+                pairs[i][0].instagram,
+                pairs[i][0].linkedin
+              ) +
+              " and " +
+              match_message(
+                pairs[i][1].name,
+                pairs[i][1].occupation,
+                pairs[i][1].instagram,
+                pairs[i][1].linkedin
+              ) +
+              `\n\nFeel free to coordinate a time and location that works for both of you. Enjoy!`)
+          );
         } catch (error) {
           console.log(error);
         }
       } else {
         try {
-          await bot.telegram
-            .sendMessage(
-              (chat_id = user_1),
-              (text =
-                `Hello! You've been randomly matched with @${pairs[i][1].username} for a coffee ☕.\nHere are some details about them:\n\n` +
-                match_message(
-                  pairs[i][1].name,
-                  pairs[i][1].occupation,
-                  pairs[i][1].instagram,
-                  pairs[i][1].linkedin
-                ) +
-                `\n\nFeel free to coordinate a time and location that works for both of you. Enjoy!`)
-            )
-            .catch((err) => console.log(err));
+          await bot.telegram.sendMessage(
+            (chat_id = user_1),
+            (text =
+              `Hello! You've been randomly matched with @${pairs[i][1].username} for a coffee ☕.\nHere are some details about them:\n\n` +
+              match_message(
+                pairs[i][1].name,
+                pairs[i][1].occupation,
+                pairs[i][1].instagram,
+                pairs[i][1].linkedin
+              ) +
+              `\n\nFeel free to coordinate a time and location that works for both of you. Enjoy!`)
+          );
         } catch (error) {
           console.log(error);
         }
         try {
-          await bot.telegram
-            .sendMessage(
-              (chat_id = user_2),
-              (text =
-                `Hello! You've been randomly matched with @${pairs[i][0].username} for a coffee ☕.\nHere are some details about them:\n\n` +
-                match_message(
-                  pairs[i][0].name,
-                  pairs[i][0].occupation,
-                  pairs[i][0].instagram,
-                  pairs[i][0].linkedin
-                ) +
-                `\n\nFeel free to coordinate a time and location that works for both of you. Enjoy!`)
-            )
-            .catch((err) => console.log(err));
+          await bot.telegram.sendMessage(
+            (chat_id = user_2),
+            (text =
+              `Hello! You've been randomly matched with @${pairs[i][0].username} for a coffee ☕.\nHere are some details about them:\n\n` +
+              match_message(
+                pairs[i][0].name,
+                pairs[i][0].occupation,
+                pairs[i][0].instagram,
+                pairs[i][0].linkedin
+              ) +
+              `\n\nFeel free to coordinate a time and location that works for both of you. Enjoy!`)
+          );
         } catch (error) {
           console.log(error);
         }
@@ -290,10 +280,6 @@ exports.handler = async function (event, context) {
   } else {
     console.log("Can't form pairs");
   }
-  
-  bot.catch(err => {
-    console.log("Oops, encountered an error", err);
-  });
 
   console.log("new", pairs);
 
