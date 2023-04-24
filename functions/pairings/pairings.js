@@ -290,6 +290,10 @@ exports.handler = async function (event, context) {
   } else {
     console.log("Can't form pairs");
   }
+  
+  bot.catch(err => {
+    console.log("Oops, encountered an error", err);
+  });
 
   console.log("new", pairs);
 
