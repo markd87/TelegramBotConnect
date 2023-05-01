@@ -36,7 +36,7 @@ async function get_previous_pairs() {
     q.Map(
       q.Paginate(q.Documents(q.Collection("pairs")), { size: 1000 }),
       q.Lambda("pair", {
-        pair: q.Select(["data", "pair"], q.Get(q.Var("pair"))),
+        pair: q.Select(["data"], q.Get(q.Var("pair"))),
       })
     )
   );
@@ -61,11 +61,23 @@ exports.handler = async function (event, context) {
   // current date as string
   let current_date = new Date().toJSON().slice(0, 10);
 
+  let previous_pairs = await get_previous_pairs();
+
+  let last_date = previous_pairs["data"].slice(-1)[0].pair.date;
+
+  // check if pairs have already been store today, meaning messages have been sent
+  // don't send again
+  if (last_date === current_date) {
+    console.log("Already sent");
+    return {
+      statusCode: 200,
+    };
+  }
+
+  previous_pairs = previous_pairs["data"].map((el) => el.pair.pair);
+
   let all_participants = await get_all_participants();
   all_participants = all_participants["data"];
-
-  let previous_pairs = await get_previous_pairs();
-  previous_pairs = previous_pairs["data"].map((el) => el.pair);
 
   shuffleArray(all_participants);
 
