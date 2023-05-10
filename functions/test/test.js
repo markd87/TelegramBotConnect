@@ -1,8 +1,6 @@
 const axios = require("axios");
 
 exports.handler = async function (event, context) {
-  // current date as string
-
   // let url = "http://localhost:9000/.netlify/functions/send_messages-background";
   let url =
     "https://aquamarine-horse-60f550.netlify.app/.netlify/functions/test_message-background";
@@ -13,8 +11,8 @@ exports.handler = async function (event, context) {
   });
 
   console.log(result);
-
   console.log("end");
+
   return {
     statusCode: 200,
   };
