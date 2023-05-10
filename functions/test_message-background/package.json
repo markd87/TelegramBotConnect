@@ -1,0 +1,16 @@
+{
+  "name": "test_message-background",
+  "version": "1.0.1",
+  "description": "test message",
+  "main": "test_message-background.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "faunadb": "^4.7.1",
+    "telegraf": "^4.11.2"
+  }
+}
