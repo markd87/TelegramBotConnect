@@ -181,14 +181,23 @@ exports.handler = async function (event, context) {
       let user_1 = parseInt(pairs[i][0].userId);
       let user_2 = parseInt(pairs[i][1].userId);
 
+      chat_1 = await bot.telegram.getChat(user_1);
+      username_1 = chat_1.username;
+
+      chat_2 = await bot.telegram.getChat(user_2);
+      username_2 = chat_2.username;
+
       if (pairs[i].length == 3) {
         let user_3 = parseInt(pairs[i][2].userId);
+
+        chat_3 = await bot.telegram.getChat(user_3);
+        username_3 = chat_3.username;
 
         try {
           await bot.telegram.sendMessage(
             (chat_id = user_1),
             (text =
-              `Hello! as there was an odd number of participants, you've been randomly matched with @${pairs[i][1].username} and @${pairs[i][2].username} for a coffee ☕.\nHere are some details about them:\n\n` +
+              `Hello! as there was an odd number of participants, you've been randomly matched with @${username_2} and @${username_3} for a coffee ☕.\nHere are some details about them:\n\n` +
               match_message(
                 pairs[i][1].name,
                 pairs[i][1].occupation,
@@ -211,7 +220,7 @@ exports.handler = async function (event, context) {
           await bot.telegram.sendMessage(
             (chat_id = user_2),
             (text =
-              `Hello! as there was an odd number of participants, you've been randomly matched with @${pairs[i][0].username} and @${pairs[i][2].username} for a coffee ☕.\nHere are some details about them:\n\n` +
+              `Hello! as there was an odd number of participants, you've been randomly matched with @${username_1} and @${username_3} for a coffee ☕.\nHere are some details about them:\n\n` +
               match_message(
                 pairs[i][0].name,
                 pairs[i][0].occupation,
@@ -235,7 +244,7 @@ exports.handler = async function (event, context) {
           await bot.telegram.sendMessage(
             (chat_id = user_3),
             (text =
-              `Hello! as there was an odd number of participants, you've been randomly matched with @${pairs[i][0].username} and @${pairs[i][1].username} for a coffee ☕.\nHere are some details about them:\n\n` +
+              `Hello! as there was an odd number of participants, you've been randomly matched with @${username_1} and @${username_2} for a coffee ☕.\nHere are some details about them:\n\n` +
               match_message(
                 pairs[i][0].name,
                 pairs[i][0].occupation,
@@ -262,7 +271,7 @@ exports.handler = async function (event, context) {
           await bot.telegram.sendMessage(
             (chat_id = user_1),
             (text =
-              `Hello! You've been randomly matched with @${pairs[i][1].username} for a coffee ☕.\nHere are some details about them:\n\n` +
+              `Hello! You've been randomly matched with @${username_2} for a coffee ☕.\nHere are some details about them:\n\n` +
               match_message(
                 pairs[i][1].name,
                 pairs[i][1].occupation,
@@ -278,7 +287,7 @@ exports.handler = async function (event, context) {
           await bot.telegram.sendMessage(
             (chat_id = user_2),
             (text =
-              `Hello! You've been randomly matched with @${pairs[i][0].username} for a coffee ☕.\nHere are some details about them:\n\n` +
+              `Hello! You've been randomly matched with @${username_1} for a coffee ☕.\nHere are some details about them:\n\n` +
               match_message(
                 pairs[i][0].name,
                 pairs[i][0].occupation,
