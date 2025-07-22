@@ -14,7 +14,7 @@ function shuffleArray(array) {
 
 const BATCH_SIZE = 200;
 
-async function get_all_participants() {
+async function getAllParticipants() {
   let allUsers = [];
   let from = 0;
   let to = BATCH_SIZE - 1;
