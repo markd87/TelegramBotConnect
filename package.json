@@ -9,8 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@supabase/supabase-js": "^2.52.0",
     "netlify-lambda": "^2.0.15",
-    "faunadb": "^4.7.1",
     "telegraf": "^4.12.2"
   }
 }
