@@ -1,5 +1,5 @@
 const { Telegraf } = require("telegraf");
-const supabase = require('./db');
+const supabase = require('../bot/components/db');
 
 const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN);
 
