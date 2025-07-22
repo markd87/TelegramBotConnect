@@ -1,4 +1,4 @@
-export function getUser(info) {
+function getUser(info) {
   const {
     id,
     is_bot: isBot,
@@ -11,3 +11,5 @@ export function getUser(info) {
 
   return { id, isBot, name, username };
 }
+
+module.exports = { getUser };

@@ -3,11 +3,11 @@ import supabase from './db.js'
 // const client = new faunadb.Client({ secret: process.env.FAUNA_SECRET_KEY });
 // const q = faunadb.query;
 
-export async function checkNewUser(id) {
+async function checkNewUser(id) {
   const { data, error } = await supabase
     .from('user')                   // your table name
-    .select('id')
-    .eq('id', id)
+    .select('userId')
+    .eq('userId', id)
     .single();                      // expect at most one result
 
   if (error) {
@@ -24,7 +24,7 @@ export async function checkNewUser(id) {
 }
 
 
-export async function newUser(id, name, username, occupation, instagram, linkedin) {
+async function newUser(id, name, username, occupation, instagram, linkedin) {
   console.log(id)
 
   const { error } = await supabase
@@ -49,7 +49,7 @@ export async function newUser(id, name, username, occupation, instagram, linkedi
   return true
 }
 
-export async function pauseUser(id) {
+async function pauseUser(id) {
   // First, try to find the user
   const { data, error: fetchError } = await supabase
     .from('user')
@@ -82,7 +82,7 @@ export async function pauseUser(id) {
 
 
 
-export async function resumeUser(id) {
+async function resumeUser(id) {
   // Step 1: Try to find the user
   const { data, error: fetchError } = await supabase
     .from('user')
@@ -114,7 +114,7 @@ export async function resumeUser(id) {
 }
 
 
-export async function removeUser(id) {
+async function removeUser(id) {
   const { data, error } = await supabase
     .from('user')
     .delete()
@@ -128,3 +128,5 @@ export async function removeUser(id) {
 
   return data.length > 0
 }
+
+module.exports = { checkNewUser, newUser, pauseUser, resumeUser, removeUser};
