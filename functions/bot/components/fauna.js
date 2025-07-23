@@ -7,20 +7,15 @@ async function checkNewUser(id) {
   const { data, error } = await supabase
     .from('user')                   // your table name
     .select('userId')
-    .eq('userId', id)
-    .single();                      // expect at most one result
+    .eq('userId', String(id))        // ✅ force to string
+    .maybeSingle();                  // ✅ allows 0 or 1 rows
 
-  if (error) {
-    if (error.code === 'PGRST116') {
-      // "Row not found" error – new user
-      return true;
+    if (error) {
+      console.error('Supabase error checking user:', error);
+      return false;
     }
-    console.error(error);
-    return false;
-  }
 
-  // If user found, not new
-  return false;
+    return !data; // true if user doesn't exist
 }
 
 
