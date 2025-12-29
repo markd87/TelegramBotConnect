@@ -1,6 +1,8 @@
 [build]
   functions = "functions"
   command = "netlify-lambda install && mkdir ./public"
+[build.environment]
+  NODE_VERSION = "20"
 [template.environment]
   FAUNA_SECRET_KEY = ""
   TELEGRAM_BOT_TOKEN = "Telegram bot token here"
