@@ -145,8 +145,8 @@ exports.handler = async function (event, context) {
   let pairs = [];
   let pairs_to_store = [];
 
-  console.log(participants.length);
-  console.log(participants.length/2);
+  // console.log(participants.length);
+  // console.log(participants.length/2);
 
   while (pairs.length !== participants.length / 2 && !stop) {
     pairs = [];
