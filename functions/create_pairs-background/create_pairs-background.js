@@ -164,6 +164,8 @@ exports.handler = async function (event, context) {
       const key2 = `${id2}_${id1}`;
 
       if (previous_pairs.includes(key1) || previous_pairs.includes(key2)) {
+        console.log(trials);
+        console.log('pair exists')
         break;
       }
 
