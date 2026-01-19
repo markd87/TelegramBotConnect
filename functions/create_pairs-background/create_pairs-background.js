@@ -140,7 +140,7 @@ exports.handler = async function (event, context) {
   }
 
   let trials = 0;
-  const MAX_TRIALS = 10000;
+  const MAX_TRIALS = 15000;
   let stop = false;
   let pairs = [];
   let pairs_to_store = [];
@@ -164,8 +164,8 @@ exports.handler = async function (event, context) {
       const key2 = `${id2}_${id1}`;
 
       if (previous_pairs.includes(key1) || previous_pairs.includes(key2)) {
-        console.log(trials);
-        console.log('pair exists')
+        // console.log(trials);
+        // console.log('pair exists')
         break;
       }
 
