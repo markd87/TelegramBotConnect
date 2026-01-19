@@ -140,13 +140,13 @@ exports.handler = async function (event, context) {
   }
 
   let trials = 0;
-  const MAX_TRIALS = 6000;
+  const MAX_TRIALS = 10000;
   let stop = false;
   let pairs = [];
   let pairs_to_store = [];
 
-  // console.log(participants.length);
-  // console.log(participants.length/2);
+  console.log(participants.length);
+  console.log(participants.length/2);
 
   while (pairs.length !== participants.length / 2 && !stop) {
     pairs = [];
