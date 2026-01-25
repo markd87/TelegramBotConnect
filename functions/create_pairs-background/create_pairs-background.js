@@ -1,7 +1,21 @@
 const { Telegraf } = require("telegraf");
-const supabase = require('../bot/components/db');
 
-const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN);
+let botInstance = null;
+let supabaseInstance = null;
+
+function getBot() {
+  if (!botInstance) {
+    botInstance = new Telegraf(process.env.TELEGRAM_BOT_TOKEN);
+  }
+  return botInstance;
+}
+
+function getSupabase() {
+  if (!supabaseInstance) {
+    supabaseInstance = require('../bot/components/db');
+  }
+  return supabaseInstance;
+}
 
 
 function shuffleArray(array) {
@@ -14,7 +28,107 @@ function shuffleArray(array) {
 
 const BATCH_SIZE = 200;
 
+function createPairs(participants, previousPairs, current_date, options = {}) {
+  const maxTrials = options.maxTrials ?? 15000;
+  const shuffle = options.shuffle ?? shuffleArray;
+  const working = participants.slice();
+
+  shuffle(working);
+
+  let last = null;
+  if (working.length % 2 !== 0) {
+    last = working.pop();
+  }
+
+  let trials = 0;
+  let stop = false;
+  let pairs = [];
+  let pairs_to_store = [];
+
+  while (pairs.length !== working.length / 2 && !stop) {
+    pairs = [];
+    pairs_to_store = [];
+    trials += 1;
+
+    shuffle(working);
+    const home = working.slice(0, working.length / 2);
+    const away = working.slice(working.length / 2);
+
+    for (let i = 0; i < home.length; i++) {
+      const id1 = home[i].userId;
+      const id2 = away[i].userId;
+      const key1 = `${id1}_${id2}`;
+      const key2 = `${id2}_${id1}`;
+
+      if (previousPairs.has(key1) || previousPairs.has(key2)) {
+        break;
+      }
+
+      pairs.push([home[i], away[i]]);
+      pairs_to_store.push({
+        date: current_date,
+        pair: key1,
+        name_1: home[i].name,
+        name_2: away[i].name,
+        username_1: home[i].username,
+        username_2: away[i].username,
+      });
+    }
+
+    if (trials === maxTrials) {
+      stop = true;
+      pairs = [];
+      pairs_to_store = [];
+    }
+  }
+
+  if (!stop && last) {
+    let pairedWithLast = false;
+    for (let i = 0; i < pairs.length; i++) {
+      const [p1, p2] = pairs[i];
+
+      const seenBefore =
+        previousPairs.has(`${p1.userId}_${last.userId}`) ||
+        previousPairs.has(`${p2.userId}_${last.userId}`) ||
+        previousPairs.has(`${last.userId}_${p1.userId}`) ||
+        previousPairs.has(`${last.userId}_${p2.userId}`);
+
+      if (!seenBefore) {
+        pairs[i] = [p1, p2, last];
+        pairedWithLast = true;
+        pairs_to_store.push(
+          {
+            date: current_date,
+            pair: `${p1.userId}_${last.userId}`,
+            name_1: p1.name,
+            name_2: last.name,
+            username_1: p1.username,
+            username_2: last.username,
+          },
+          {
+            date: current_date,
+            pair: `${p2.userId}_${last.userId}`,
+            name_1: p2.name,
+            name_2: last.name,
+            username_1: p2.username,
+            username_2: last.username,
+          }
+        );
+        break;
+      }
+    }
+    if (!pairedWithLast) {
+      stop = true;
+      pairs = [];
+      pairs_to_store = [];
+    }
+  }
+
+  return { pairs, pairs_to_store, stop };
+}
+
 async function getAllParticipants() {
+  const supabase = getSupabase();
   let allUsers = [];
   let from = 0;
   let to = BATCH_SIZE - 1;
@@ -45,6 +159,7 @@ async function getAllParticipants() {
 }
 
 async function getPreviousPairs() {
+  const supabase = getSupabase();
   const BATCH_SIZE = 1000;
   let all = [];
   let from = 0;
@@ -75,6 +190,7 @@ async function getPreviousPairs() {
 }
 
 async function getLastPairDate() {
+  const supabase = getSupabase();
   const { data, error } = await supabase
     .from('pairs')
     .select('date')
@@ -90,6 +206,7 @@ async function getLastPairDate() {
 }
 
 async function storeNewPairs(pairs) {
+  const supabase = getSupabase();
   const { error } = await supabase
     .from('pairs')
     .insert(pairs);
@@ -122,8 +239,9 @@ function matchMessage(name, occupation, instagram, linkedin) {
 exports.handler = async function (event, context) {
   console.log('Received event:', event);
 
+  const bot = getBot();
   const current_date = new Date().toISOString().slice(0, 10);
-  const previous_pairs = await getPreviousPairs(); // array of 'id1_id2'
+  const previous_pairs = new Set(await getPreviousPairs()); // set of 'id1_id2'
   const last_date = await getLastPairDate(); // string in YYYY-MM-DD format
 
   if (last_date === current_date) {
@@ -131,99 +249,22 @@ exports.handler = async function (event, context) {
     return { statusCode: 200 };
   }
 
-  let participants = await getAllParticipants();
-  shuffleArray(participants);
-
-  let last = null;
-  if (participants.length % 2 !== 0) {
-    last = participants.pop();
-  }
-
-  let trials = 0;
-  const MAX_TRIALS = 15000;
-  let stop = false;
-  let pairs = [];
-  let pairs_to_store = [];
+  const participants = await getAllParticipants();
+  const { pairs, pairs_to_store, stop } = createPairs(
+    participants,
+    previous_pairs,
+    current_date
+  );
 
   console.log(participants.length);
-  console.log(participants.length/2);
+  console.log(participants.length / 2);
 
-  while (pairs.length !== participants.length / 2 && !stop) {
-    pairs = [];
-    pairs_to_store = [];
-    trials += 1;
-
-    shuffleArray(participants);
-    const home = participants.slice(0, participants.length / 2);
-    const away = participants.slice(participants.length / 2);
-
-    for (let i = 0; i < home.length; i++) {
-      const id1 = home[i].userId;
-      const id2 = away[i].userId;
-      const key1 = `${id1}_${id2}`;
-      const key2 = `${id2}_${id1}`;
-
-      if (previous_pairs.includes(key1) || previous_pairs.includes(key2)) {
-        // console.log(trials);
-        // console.log('pair exists')
-        break;
-      }
-
-      pairs.push([home[i], away[i]]);
-      pairs_to_store.push({
-        date: current_date,
-        pair: key1,
-        name_1: home[i].name,
-        name_2: away[i].name,
-        username_1: home[i].username,
-        username_2: away[i].username,
-      });
-    }
-
-    if (trials === MAX_TRIALS) {
-      stop = true;
-      pairs = [];
-      pairs_to_store = [];
-    }
+  if (stop) {
+    console.log("Can't form pairs");
+    return { statusCode: 200 };
   }
 
   if (!stop) {
-    if (last) {
-      for (let i = 0; i < pairs.length; i++) {
-        const [p1, p2] = pairs[i];
-        const uids = [p1.userId, p2.userId, last.userId];
-
-        const seenBefore =
-          previous_pairs.includes(`${p1.userId}_${last.userId}`) ||
-          previous_pairs.includes(`${p2.userId}_${last.userId}`) ||
-          previous_pairs.includes(`${last.userId}_${p1.userId}`) ||
-          previous_pairs.includes(`${last.userId}_${p2.userId}`);
-
-        if (!seenBefore) {
-          pairs[i] = [p1, p2, last];
-          pairs_to_store.push(
-            {
-              date: current_date,
-              pair: `${p1.userId}_${last.userId}`,
-              name_1: p1.name,
-              name_2: last.name,
-              username_1: p1.username,
-              username_2: last.username,
-            },
-            {
-              date: current_date,
-              pair: `${p2.userId}_${last.userId}`,
-              name_1: p2.name,
-              name_2: last.name,
-              username_1: p2.username,
-              username_2: last.username,
-            }
-          );
-          break;
-        }
-      }
-    }
-
     const stored = await storeNewPairs(pairs_to_store);
 
     if (!stored) {
@@ -245,17 +286,17 @@ exports.handler = async function (event, context) {
         const chat3 = await bot.telegram.getChat(u3);
         const uname3 = chat3.username;
 
-        const text = (a, b, c) =>
-          `Hello! As there was an odd number of participants, you've been randomly matched with @${b} and @${c} for a coffee ☕.\nHere are some details about them:\n\n` +
-          matchMessage(pair[1].name, pair[1].occupation, pair[1].instagram, pair[1].linkedin) +
+        const text = (a, b) =>
+          `Hello! As there was an odd number of participants, you've been randomly matched with @${a.username} and @${b.username} for a coffee ☕.\nHere are some details about them:\n\n` +
+          matchMessage(a.name, a.occupation, a.instagram, a.linkedin) +
           ' and ' +
-          matchMessage(pair[2].name, pair[2].occupation, pair[2].instagram, pair[2].linkedin) +
+          matchMessage(b.name, b.occupation, b.instagram, b.linkedin) +
           `\n\nFeel free to coordinate a time and location that works for both of you. Enjoy!`;
 
         try {
-          await bot.telegram.sendMessage(u1, text(uname1, uname2, uname3));
-          await bot.telegram.sendMessage(u2, text(uname2, uname1, uname3));
-          await bot.telegram.sendMessage(u3, text(uname3, uname1, uname2));
+          await bot.telegram.sendMessage(u1, text(pair[1], pair[2]));
+          await bot.telegram.sendMessage(u2, text(pair[0], pair[2]));
+          await bot.telegram.sendMessage(u3, text(pair[0], pair[1]));
         } catch (e) {
           console.error('Message error (3-person):', e);
         }
@@ -291,6 +332,10 @@ exports.handler = async function (event, context) {
   return {
     statusCode: 200,
   };
+};
+
+exports._internal = {
+  createPairs,
 };
 
 
