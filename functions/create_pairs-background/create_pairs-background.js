@@ -187,7 +187,7 @@ async function getAllParticipants() {
   return allUsers;
 }
 
-async function getPreviousPairs() {
+async function getPreviousPairs(sinceDate) {
   const supabase = getSupabase();
   const BATCH_SIZE = 1000;
   let all = [];
@@ -195,10 +195,14 @@ async function getPreviousPairs() {
   let to = BATCH_SIZE - 1;
 
   while (true) {
-    const { data, error } = await supabase
+    let query = supabase
       .from('pairs')
       .select('pair')
       .range(from, to);
+    if (sinceDate) {
+      query = query.gte('date', sinceDate);
+    }
+    const { data, error } = await query;
 
     if (error) {
       console.error(error);
@@ -270,7 +274,10 @@ exports.handler = async function (event, context) {
 
   const bot = getBot();
   const current_date = new Date().toISOString().slice(0, 10);
-  const previous_pairs = new Set(await getPreviousPairs()); // set of 'id1_id2'
+  const since = new Date();
+  since.setMonth(since.getMonth() - 4);
+  const sinceDate = since.toISOString().slice(0, 10);
+  const previous_pairs = new Set(await getPreviousPairs(sinceDate)); // set of 'id1_id2'
   const last_date = await getLastPairDate(); // string in YYYY-MM-DD format
 
   if (last_date === current_date) {
