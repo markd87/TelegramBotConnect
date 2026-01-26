@@ -45,6 +45,7 @@ function createPairs(participants, previousPairs, current_date, options = {}) {
   let pairs = [];
   let pairs_to_store = [];
   let lastPlacementPossible = null;
+  let maxPairsFormed = 0;
 
   while (!stop) {
     pairs = [];
@@ -77,6 +78,9 @@ function createPairs(participants, previousPairs, current_date, options = {}) {
     }
 
     if (pairs.length !== working.length / 2) {
+      if (pairs.length > maxPairsFormed) {
+        maxPairsFormed = pairs.length;
+      }
       if (trials === maxTrials) {
         stop = true;
       }
@@ -121,6 +125,9 @@ function createPairs(participants, previousPairs, current_date, options = {}) {
         }
       }
       if (!pairedWithLast) {
+        if (pairs.length > maxPairsFormed) {
+          maxPairsFormed = pairs.length;
+        }
         lastPlacementPossible = possibleSlots > 0;
         pairs = [];
         pairs_to_store = [];
@@ -139,7 +146,14 @@ function createPairs(participants, previousPairs, current_date, options = {}) {
       pairs_to_store = [];
   }
 
-  return { pairs, pairs_to_store, stop, trials, lastPlacementPossible };
+  return {
+    pairs,
+    pairs_to_store,
+    stop,
+    trials,
+    lastPlacementPossible,
+    maxPairsFormed,
+  };
 }
 
 async function getAllParticipants() {
@@ -265,7 +279,14 @@ exports.handler = async function (event, context) {
   }
 
   const participants = await getAllParticipants();
-  const { pairs, pairs_to_store, stop, trials, lastPlacementPossible } = createPairs(
+  const {
+    pairs,
+    pairs_to_store,
+    stop,
+    trials,
+    lastPlacementPossible,
+    maxPairsFormed,
+  } = createPairs(
     participants,
     previous_pairs,
     current_date
@@ -275,6 +296,10 @@ exports.handler = async function (event, context) {
   console.log(participants.length / 2);
   console.log('previous pairs:', previous_pairs.size);
   console.log('pairing trials:', trials);
+  if (stop && maxPairsFormed > 0) {
+    console.log('best attempt pairs formed:', maxPairsFormed);
+    console.log('pairs missing:', participants.length / 2 - maxPairsFormed);
+  }
 
   if (stop) {
     if (lastPlacementPossible === false) {
