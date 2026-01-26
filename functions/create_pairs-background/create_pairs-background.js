@@ -44,8 +44,9 @@ function createPairs(participants, previousPairs, current_date, options = {}) {
   let stop = false;
   let pairs = [];
   let pairs_to_store = [];
+  let lastPlacementPossible = null;
 
-  while (pairs.length !== working.length / 2 && !stop) {
+  while (!stop) {
     pairs = [];
     pairs_to_store = [];
     trials += 1;
@@ -75,56 +76,70 @@ function createPairs(participants, previousPairs, current_date, options = {}) {
       });
     }
 
-    if (trials === maxTrials) {
-      stop = true;
-      pairs = [];
-      pairs_to_store = [];
+    if (pairs.length !== working.length / 2) {
+      if (trials === maxTrials) {
+        stop = true;
+      }
+      continue;
     }
-  }
 
-  if (!stop && last) {
-    let pairedWithLast = false;
-    for (let i = 0; i < pairs.length; i++) {
-      const [p1, p2] = pairs[i];
+    if (last) {
+      let pairedWithLast = false;
+      let possibleSlots = 0;
+      for (let i = 0; i < pairs.length; i++) {
+        const [p1, p2] = pairs[i];
 
-      const seenBefore =
-        previousPairs.has(`${p1.userId}_${last.userId}`) ||
-        previousPairs.has(`${p2.userId}_${last.userId}`) ||
-        previousPairs.has(`${last.userId}_${p1.userId}`) ||
-        previousPairs.has(`${last.userId}_${p2.userId}`);
+        const seenBefore =
+          previousPairs.has(`${p1.userId}_${last.userId}`) ||
+          previousPairs.has(`${p2.userId}_${last.userId}`) ||
+          previousPairs.has(`${last.userId}_${p1.userId}`) ||
+          previousPairs.has(`${last.userId}_${p2.userId}`);
 
-      if (!seenBefore) {
-        pairs[i] = [p1, p2, last];
-        pairedWithLast = true;
-        pairs_to_store.push(
-          {
-            date: current_date,
-            pair: `${p1.userId}_${last.userId}`,
-            name_1: p1.name,
-            name_2: last.name,
-            username_1: p1.username,
-            username_2: last.username,
-          },
-          {
-            date: current_date,
-            pair: `${p2.userId}_${last.userId}`,
-            name_1: p2.name,
-            name_2: last.name,
-            username_1: p2.username,
-            username_2: last.username,
-          }
-        );
-        break;
+        if (!seenBefore) {
+          possibleSlots += 1;
+          pairs[i] = [p1, p2, last];
+          pairedWithLast = true;
+          pairs_to_store.push(
+            {
+              date: current_date,
+              pair: `${p1.userId}_${last.userId}`,
+              name_1: p1.name,
+              name_2: last.name,
+              username_1: p1.username,
+              username_2: last.username,
+            },
+            {
+              date: current_date,
+              pair: `${p2.userId}_${last.userId}`,
+              name_1: p2.name,
+              name_2: last.name,
+              username_1: p2.username,
+              username_2: last.username,
+            }
+          );
+          break;
+        }
+      }
+      if (!pairedWithLast) {
+        lastPlacementPossible = possibleSlots > 0;
+        pairs = [];
+        pairs_to_store = [];
+        if (trials === maxTrials) {
+          stop = true;
+        }
+        continue;
       }
     }
-    if (!pairedWithLast) {
-      stop = true;
-      pairs = [];
-      pairs_to_store = [];
-    }
+
+    break;
   }
 
-  return { pairs, pairs_to_store, stop };
+  if (stop) {
+      pairs = [];
+      pairs_to_store = [];
+  }
+
+  return { pairs, pairs_to_store, stop, trials, lastPlacementPossible };
 }
 
 async function getAllParticipants() {
@@ -250,7 +265,7 @@ exports.handler = async function (event, context) {
   }
 
   const participants = await getAllParticipants();
-  const { pairs, pairs_to_store, stop } = createPairs(
+  const { pairs, pairs_to_store, stop, trials, lastPlacementPossible } = createPairs(
     participants,
     previous_pairs,
     current_date
@@ -258,8 +273,13 @@ exports.handler = async function (event, context) {
 
   console.log(participants.length);
   console.log(participants.length / 2);
+  console.log('previous pairs:', previous_pairs.size);
+  console.log('pairing trials:', trials);
 
   if (stop) {
+    if (lastPlacementPossible === false) {
+      console.log('odd participant had no valid trio placements');
+    }
     console.log("Can't form pairs");
     return { statusCode: 200 };
   }
